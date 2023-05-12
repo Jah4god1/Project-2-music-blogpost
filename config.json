@@ -1,0 +1,14 @@
+{
+    "development": {
+      "username": "your_mysql_username",
+      "password": "your_mysql_password",
+      "database": "your_database_name",
+      "host": "127.0.0.1",
+      "dialect": "mysql"
+    },
+    "production": {
+      "use_env_variable": "DATABASE_URL",
+      "dialect": "mysql"
+    }
+  }
+  
