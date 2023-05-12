@@ -21,13 +21,25 @@ exports.login = (req, res) => {
 
 // Route handler for authenticating a user
 exports.authenticateUser = (req, res) => {
-  const { email, password } = req.body;
+  // Validate the email field
+  body('email').isEmail(),
 
-  const errors = validationResult(req); // Check if there are any validation errors from the express-validator middleware
+  // Validate the password field
+  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters'),
 
-  if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.array() }); // If there are validation errors, return them in the response
-  }
+  // Handle validation errors
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+    next();
+  },
+
+  // Authenticate the user
+  (req, res) => {
+    // ...
+  },
 
   // Find the user in the database with the given email
   User.findOne({ where: { email } })
