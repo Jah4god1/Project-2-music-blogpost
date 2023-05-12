@@ -1,20 +1,68 @@
 //TANNER
-const express = require('express');
-const { body } = require('express-validator');
-const homeController = require('./controllers/homeController');
-const apiController = require('./controllers/apiController');
+const router = require('express').Router();
+const { body, validationResult } = require('express-validator');
+const bcrypt = require('bcrypt');
+const { User } = require('../models');
 
-const router = express.Router();
+// Route handler for the login page
+router.get('/login', (req, res) => {
+  res.render('login', {
+    pageTitle: 'Login',
+  });
+});
 
-router.get('/', homeController.getIndex);
+// Route handler for authenticating a user
+router.post('/login', [
+  body('email').isEmail().withMessage('Please provide a valid email address.'),
+  body('password').notEmpty().withMessage('Password is required.'),
+], async (req, res) => {
+  const { email, password } = req.body;
 
-router.get('/api/songs', apiController.getSongs);
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render('login', {
+      pageTitle: 'Login',
+      errors: errors.array(),
+      email,
+    });
+  }
 
-router.post('/api/songs', [
-  body('title').notEmpty(),
-  body('artist').notEmpty(),
-  body('album').notEmpty(),
-  body('year').isInt(),
-], apiController.addSong);
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(401).render('login', {
+        pageTitle: 'Login',
+        error: 'Invalid email or password.',
+        email,
+      });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      return res.status(401).render('login', {
+        pageTitle: 'Login',
+        error: 'Invalid email or password.',
+        email,
+      });
+    }
+
+    req.session.userId = user.id;
+    return res.redirect('/');
+  } catch (error) {
+    console.error(error);
+    return res.status(500).render('login', {
+      pageTitle: 'Login',
+      error: 'An unexpected error occurred. Please try again later.',
+      email,
+    });
+  }
+});
+
+// Route handler for logging out a user
+router.post('/logout', (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/');
+  });
+});
 
 module.exports = router;

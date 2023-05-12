@@ -1,7 +1,8 @@
 const bcrypt = require('bcrypt');
-const { validationResult } = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const User = require('../models/user');
 const { saltRounds } = require('../config/auth');
+const db = require('../config/connection');
 
 // Middleware to check if the user is authenticated
 exports.authenticate = (req, res, next) => {
@@ -20,7 +21,7 @@ exports.login = (req, res) => {
 };
 
 // Route handler for authenticating a user
-exports.authenticateUser = (req, res) => {
+exports.authenticateUser = [
   // Validate the email field
   body('email').isEmail(),
 
@@ -38,31 +39,31 @@ exports.authenticateUser = (req, res) => {
 
   // Authenticate the user
   (req, res) => {
-    // ...
-  },
+    const { email, password } = req.body;
 
-  // Find the user in the database with the given email
-  User.findOne({ where: { email } })
-    .then((user) => {
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' }); // If the user is not found, return an error in the response
-      }
-
-      // Compare the provided password with the password hash stored in the database using bcrypt
-      bcrypt.compare(password, user.password, (err, result) => {
-        if (result) { // If the password is correct, store the user ID in the session and return a success message in the response
-          req.session.userId = user.id;
-          return res.json({ success: true });
+    // Find the user in the database with the given email
+    User.findOne({ where: { email } })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' }); // If the user is not found, return an error in the response
         }
 
-        return res.status(401).json({ error: 'Incorrect password' }); // If the password is incorrect, return an error in the response
+        // Compare the provided password with the password hash stored in the database using bcrypt
+        bcrypt.compare(password, user.password, (err, result) => {
+          if (result) { // If the password is correct, store the user ID in the session and return a success message in the response
+            req.session.userId = user.id;
+            return res.json({ success: true });
+          }
+
+          return res.status(401).json({ error: 'Incorrect password' }); // If the password is incorrect, return an error in the response
+        });
+      })
+      .catch((err) => { // If there is a server error, return an error in the response
+        console.log(err);
+        res.status(500).json({ error: 'Server error' });
       });
-    })
-    .catch((err) => { // If there is a server error, return an error in the response
-      console.log(err);
-      res.status(500).json({ error: 'Server error' });
-    });
-};
+  }
+];
 
 // Route handler for logging out a user
 exports.logout = (req, res) => {

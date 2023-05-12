@@ -2,6 +2,9 @@ const mysql = require('mysql');
 const util = require('util');
 const multer = require('multer');
 const path = require('path');
+const sequelize = require('./config/database');
+const { sessionSecret } = require('./config/auth');
+
 
 // Create a connection pool
 const pool = mysql.createPool({
@@ -55,3 +58,15 @@ exports.getConnection = async () => {
 
   return connection;
 };
+
+// Sync the database models
+sequelize.sync({ force: false }).then(() => {
+    console.log('Database synced');
+  }).catch((err) => {
+    console.error('Error syncing database:', err);
+  });
+  
+  exports.getConnection = (callback) => {
+    // ...
+  };
+  
