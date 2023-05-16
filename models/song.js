@@ -1,5 +1,8 @@
-const Sequelize = require('sequelize');
+//download dependencies
+const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
+
+class Song extends Model {}
 
 const Song = sequelize.define('song', {
   title: {
