@@ -1,10 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const sequelize = require('./config/database');
-const authRoutes = require('./routes/auth');
-const homeRoutes = require('./routes/home');
-const { sessionSecret } = require('./config/auth');
+const authRoutes = require('./utils/auth');
+const homeRoutes = require('./controllers/home-routes');
+const { sessionSecret } = require('./utils/helpers');
 const multer = require('multer');
 
 const app = express();
