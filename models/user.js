@@ -2,6 +2,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+const mysql2 = require('mysql2'); 
 
 //USER password
 class User extends Model {
@@ -10,7 +11,6 @@ class User extends Model {
   }
 }
 //INITIALIZE Login (username, useremail, and password (up to 10 characters))
-
 User.init(
   {
     id: {
