@@ -1,7 +1,6 @@
 const bcrypt = require('bcrypt');
 const { validationResult, body } = require('express-validator');
 const User = require('../models/user');
-const { saltRounds } = require('../config/auth');
 const db = require('../config/connection');
 
 // Middleware to check if the user is authenticated

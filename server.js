@@ -1,10 +1,9 @@
 const express = require('express');
 const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const sequelize = require('./config/database');
-const authRoutes = require('./routes/auth');
-const homeRoutes = require('./routes/home');
-const { sessionSecret } = require('./config/auth');
+const authRoutes = require('./utils/auth');
+const homeRoutes = require('./controllers/home-routes');
+const { sessionSecret } = require('./utils/helpers');
 const multer = require('multer');
 
 const app = express();
@@ -74,6 +73,8 @@ app.post('/post-response/:postId', upload.single('response-image'), (req, res) =
 });
 
 // Start the server
-app.listen(3000, () => {
-  console.log('Server started on http://localhost:3000');
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server started on http://localhost:${PORT}`);
 });
