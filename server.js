@@ -5,6 +5,8 @@ const authRoutes = require('./utils/auth');
 const homeRoutes = require('./controllers/home-routes');
 const { sessionSecret } = require('./utils/helpers');
 const multer = require('multer');
+//handlebars
+const exphbs = require('express-handlebars'); 
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }));
 
 // Set up the view engine
+app.engine('handlebars', exphbs());
 app.set('view engine', 'ejs');
 
 // Set up multer for file uploads
