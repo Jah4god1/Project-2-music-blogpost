@@ -39,39 +39,6 @@ const upload = multer({ storage: storage })
 app.use('/', homeRoutes);
 app.use('/auth', authRoutes);
 
-// Handle the form submission for posting a response
-app.post('/post-response/:postId', upload.single('response-image'), (req, res) => {
-  const postId = req.params.postId;
-  const responseText = req.body.responseText;
-  const songName = req.body.songName;
-  const artistName = req.body.artistName;
-  const albumName = req.body.albumName;
-  const feeling = req.body.feeling;
-  const userId = req.session.userId;
-  const imageFileName = req.file ? req.file.filename : null;
-
-  // Insert the response into the database
-  const sql = `
-    INSERT INTO responses (post_id, user_id, response_text, song_name, artist_name, album_name, feeling, image_filename)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  const values = [postId, userId, responseText, songName, artistName, albumName, feeling, imageFileName];
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.error('Error connecting to database:', err);
-      return res.status(500).send('Internal server error');
-    }
-    connection.query(sql, values, (err, result) => {
-      connection.release();
-      if (err) {
-        console.error('Error inserting response into database:', err);
-        return res.status(500).send('Internal server error');
-      }
-      res.redirect(`/post/${postId}`);
-    });
-  });
-});
-
 // Start the server
 
 const PORT = process.env.PORT || 3000;
