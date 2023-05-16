@@ -1,12 +1,47 @@
-//CAROL task
+const User = require('./user'); 
+const Song = require('./song');
+const Post = require('./post');
+const PostSong = require('./PostSong');
+
 //ASSOCIATIONS (check over)
+//USER hasMany POST
+//POST belongsTo USER
+//POST hasOne SONG
+//SONG belongsToMany POST (through PostSong)
+//SONG belongsToMany USER (through PostSong)
 
-const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
-const sequelize = require('../config/connection');
+User.hasMany(Post, {
+    foreignKey: 'user_id',
+    onDelete: 'CASCADE'
+});
 
-//USER has many POST
-//POST has one USER
-//POST has one SONG
-//SONG can belong to many POST
-//SONG can belong to many USER 
+Post.belongsTo(User, {
+  foreignKey: 'post_id',
+  onDelete: 'CASCADE'
+});
+
+Post.hasOne(Song, {
+    foreignKey: 'post_id',
+    onDelete: 'CASCADE'
+});
+
+Song.belongsToMany(Post, {
+    through: PostSong,
+    foreignKey: 'song_id',
+    as:'post_song',
+    onDelete: 'CASCADE'
+});
+
+Song.belongsToMany(User, {
+    through: PostSong,
+    foreignKey: 'song_id',
+    as: 'post_song',
+    onDelete: 'CASCADE'
+});
+  
+module.exports = {
+    User,
+    Song,
+    Post,
+};
+

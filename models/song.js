@@ -1,6 +1,8 @@
-//download dependencies
+//DOWNLOAD dependencies
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const bcrypt = require('bcrypt');
+const sequelize = require('../config/connection');
+const mysql2 = require('mysql2'); 
 
 class Song extends Model {}
 
