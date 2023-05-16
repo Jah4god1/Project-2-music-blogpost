@@ -1,4 +1,3 @@
-//CAROL task
 const User = require('./user'); 
 const Song = require('./song');
 const Post = require('./post');
