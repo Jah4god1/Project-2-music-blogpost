@@ -1,18 +1,8 @@
-//CAROL task
-//ASSOCIATIONS (check over)
-//USERS can have many SONGS,    
-//SONGS can belong to many USERS
-//USERS can have many ARTISTS,  ?
-//SONGS can belong to one ARTIST 
-//ARTISTS can have many SONGS, 
-//SONGS can have one FEEL, ? OR MANY FEELS?     
-//FEEL can belong to many SONGS
-//FEEL can belong to many artists through SONGS
-
 //DOWNLOAD dependencies
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+
 //USER password
 class User extends Model {
   checkPassword(loginPw) {
@@ -20,6 +10,7 @@ class User extends Model {
   }
 }
 //INITIALIZE Login (username, useremail, and password (up to 10 characters))
+
 User.init(
   {
     id: {
