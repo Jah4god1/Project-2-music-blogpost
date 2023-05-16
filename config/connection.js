@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const mysql = require('mysql2');
 const Sequelize = require('sequelize');
+const bcrypt = require('bcrypt');
 
 
 //.ENV variables
