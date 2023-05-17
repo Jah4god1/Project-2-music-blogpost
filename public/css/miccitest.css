@@ -25,8 +25,8 @@
   }
 
 
-  .image-container-full-width {
-    position: relative;
+  .image-container {
+      margin-left: 130px;
   }
   
   .image-container img {
