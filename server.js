@@ -3,14 +3,13 @@ const session = require('express-session');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const authRoutes = require('./utils/auth');
 const homeRoutes = require('./controllers/home-routes');
-const { sessionSecret } = require('./utils/helpers');
 const multer = require('multer');
 
 const app = express();
 
 // Set up the session middleware
 app.use(session({
-  secret: sessionSecret,
+  secret: 'secret secret',
   resave: false,
   saveUninitialized: false,
   store: new SequelizeStore({
