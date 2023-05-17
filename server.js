@@ -1,46 +1,30 @@
 const express = require('express');
 const session = require('express-session');
+const routes = require('./controllers');
+
+const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const authRoutes = require('./utils/auth');
-const homeRoutes = require('./controllers/home-routes');
-const multer = require('multer');
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// Set up the session middleware
-app.use(session({
-  secret: 'secret secret',
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: new SequelizeStore({
-    db: sequelize,
-  }),
-}));
+    db: sequelize
+  })
+};
 
-// Set up middleware to parse incoming request bodies
+app.use(session(sess));
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Set up the view engine
-app.set('view engine', 'ejs');
+app.use(routes);
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
-
-// Set up the routes
-app.use('/', homeRoutes);
-app.use('/auth', authRoutes);
-
-// Start the server
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening on port', PORT));
 });
