@@ -1,0 +1,36 @@
+.color-transition {
+    animation: blueToPurple 3s infinite;
+    font-weight: bolder;
+  }
+  
+  @keyframes blueToPurple {
+    0% {
+      color: blue;
+    }
+    50% {
+      color: rgba(158, 8, 245, 0.493);
+    }
+    100% {
+      color: blue;
+    }
+  }
+  
+
+  .text-bold {
+    font-weight: bold;
+  }
+  
+  .col-md-3 {
+    margin-top: 50px;
+  }
+
+
+  .image-container {
+      margin-left: 130px;
+  }
+  
+  .image-container img {
+    position: absolute;
+    
+  }
+  
