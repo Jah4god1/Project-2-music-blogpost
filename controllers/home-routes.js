@@ -1,8 +1,8 @@
 const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const { Post, User, Response } = require('../models');
-const { isAuthenticated } = require('../middleware/auth');
-const { getConnection } = require('../helpers');
+const { isAuthenticated } = require('../utils/auth');
+const { getConnection } = require('../utils/helpers');
 
 // Route to handle form submissions for the song forum
 router.post('/responses', isAuthenticated, async (req, res) => {

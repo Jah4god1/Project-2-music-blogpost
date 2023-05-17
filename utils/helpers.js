@@ -1,10 +1,9 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const util = require('util');
 const multer = require('multer');
 const path = require('path');
-const sequelize = require('./config/database');
-const { sessionSecret } = require('./config/auth');
-
+const Sequelize = require('sequelize');
+const { sessionSecret } = require('./auth');
 
 // Create a connection pool
 const pool = mysql.createPool({
@@ -59,14 +58,18 @@ exports.getConnection = async () => {
   return connection;
 };
 
+// Initialize Sequelize with your database configuration
+const sequelize = new Sequelize('music_app', 'root', '', {
+  host: 'localhost',
+  dialect: 'mysql',
+});
+
 // Sync the database models
 sequelize.sync({ force: false }).then(() => {
-    console.log('Database synced');
-  }).catch((err) => {
-    console.error('Error syncing database:', err);
-  });
-  
-  exports.getConnection = (callback) => {
-    // ...
-  };
-  
+  console.log('Database synced');
+}).catch((err) => {
+  console.error('Error syncing database:', err);
+});
+
+// Export the necessary objects/functions
+exports.sequelize = sequelize;
