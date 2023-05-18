@@ -1,3 +1,10 @@
+body {
+  position: relative;
+}
+
+
+
+
 
 .color-transition {
     animation: blueToPurple 3s infinite;
@@ -36,15 +43,18 @@
 
   .bottom-section {
     background: linear-gradient(to right, #3652E1, #7851E8);
-    position: fixed;
+    position: absolute;
     top: 59%;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: -1;
-    /* padding: 50px; */
     color: white;
     text-align: center;
+}
+
+.invisible-hr {
+  border-top: 1px solid #3652e100;
 }
 
   
