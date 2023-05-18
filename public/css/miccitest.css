@@ -1,3 +1,4 @@
+
 .color-transition {
     animation: blueToPurple 3s infinite;
     font-weight: bolder;
@@ -26,11 +27,25 @@
 
 
   .image-container {
-      margin-left: 130px;
+
   }
   
   .image-container img {
     position: absolute;
-    
   }
+
+  .bottom-section {
+    background: linear-gradient(to right, #3652E1, #7851E8);
+    position: fixed;
+    top: 59%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    /* padding: 50px; */
+    color: white;
+    text-align: center;
+}
+
+  
   
