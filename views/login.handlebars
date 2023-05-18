@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Form</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Login Form</h2>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="inputUsername"></label>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword"></label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Add Handlebars library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+    <!-- Create Handlebars template -->
+    <script id="login-template" type="text/x-handlebars-template">
+        <div class="container">
+            <h2 class="text-center">Login Form</h2>
+            <div class="form-container">
+                <form>
+                    <div class="form-group">
+                        <label for="inputUsername"></label>
+                        <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword"></label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                </form>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        // Compile the Handlebars template
+        const template = Handlebars.compile(document.getElementById("login-template").innerHTML);
+
+        // Generate the HTML using the template and any necessary data
+        const html = template();
+
+        // Replace the existing HTML with the generated HTML
+        document.body.innerHTML = html;
+    </script>
+</body>
+</html>
