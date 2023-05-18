@@ -2,10 +2,6 @@ body {
   position: relative;
 }
 
-
-
-
-
 .color-transition {
     animation: blueToPurple 3s infinite;
     font-weight: bolder;
@@ -23,18 +19,12 @@ body {
     }
   }
   
-
   .text-bold {
     font-weight: bold;
   }
   
   .col-md-3 {
     margin-top: 50px;
-  }
-
-
-  .image-container {
-
   }
   
   .image-container img {
@@ -57,5 +47,21 @@ body {
   border-top: 1px solid #3652e100;
 }
 
+/* .picture-image {
+    width: 50%; 
+    max-width: 612px;  // Instagram's width
+    height: auto;  // Preserve aspect ratio
+    object-fit: cover;  // Cover the container without distorting the image
+} */
+
+/* #pictureContainer img {
+  max-width: 250px;  /* width of Instagram post */
+  height: auto;  /* maintain aspect ratio */
+
+  .picture-image {
+    max-width: 250px;  /* width of Instagram post */
+    height: auto;  
+  }
+  
   
   
