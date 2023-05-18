@@ -8,7 +8,6 @@ const mysql = require('mysql2');
 const Sequelize = require('sequelize');
 const bcrypt = require('bcrypt');
 
-
 //.ENV variables
 dotenv.config();
 
