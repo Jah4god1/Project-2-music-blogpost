@@ -1,31 +1,10 @@
-//TANNER
-const Song = require('../models/song');
+const router = require('express').Router();
+const userRoutes = require('./user-routes');
+const songRoutes = require('./song-routes');
+const postRoutes = require('./post-routes');
 
-exports.getSongs = (req, res) => {
-  Song.findAll()
-    .then((songs) => {
-      res.json(songs);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: 'Something went wrong' });
-    });
-};
+router.use('/users', userRoutes);
+router.use('/songs', songRoutes);
+router.use('/posts', postRoutes);
 
-exports.addSong = (req, res) => {
-  const { title, artist, album, year } = req.body;
-
-  Song.create({
-    title,
-    artist,
-    album,
-    year,
-  })
-    .then((song) => {
-      res.json(song);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ error: 'Something went wrong' });
-    });
-};
+module.exports = router;

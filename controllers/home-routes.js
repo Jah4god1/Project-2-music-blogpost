@@ -1,45 +1,36 @@
-const express = require('express');
 const router = require('express').Router();
-const { Post, User, Response } = require('../models');
-const { isAuthenticated } = require('../utils/auth');
-const { getConnection } = require('../utils/helpers');
+const { User } = require('../models');
+const withAuth = require('../utils/auth');
 
-// Route to handle form submissions for the song forum
-router.post('/responses', isAuthenticated, async (req, res) => {
-  const { postId, name, artist, album, feelings } = req.body;
-  const { image } = req.files;
-
-  // Check if all required fields are present
-  if (!postId || !name || !artist || !album || !feelings || !image) {
-    return res.status(400).send('All fields are required.');
-  }
-
+// Prevent non-logged-in users from viewing the homepage
+router.get('/', withAuth, async (req, res) => {
   try {
-    const post = await Post.findByPk(postId);
-    if (!post) {
-      return res.status(404).send('Post not found.');
-    }
-
-    const user = await User.findByPk(req.session.userId);
-    if (!user) {
-      return res.status(404).send('User not found.');
-    }
-
-    const response = await Response.create({
-      postId: post.id,
-      userId: user.id,
-      name,
-      artist,
-      album,
-      feelings,
-      image: image.name
+    const userData = await User.findAll({
+      attributes: { exclude: ['password'] },
+      order: [['name', 'ASC']],
     });
 
-    return res.redirect('/');
+    const users = userData.map((user) => user.get({ plain: true }));
+
+    res.render('homepage', {
+      users,
+      // Pass the logged_in flag to the template
+      logged_in: req.session.logged_in,
+    });
   } catch (err) {
-    console.error('Error inserting response into database:', err);
-    return res.status(500).send('An error occurred while processing your request.');
+    res.status(500).json(err);
   }
+});
+
+// Render the login page
+router.get('/login', (req, res) => {
+  // If a session exists, redirect the request to the homepage
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('login');
 });
 
 module.exports = router;

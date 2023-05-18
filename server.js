@@ -1,83 +1,30 @@
 const express = require('express');
 const session = require('express-session');
+const routes = require('./controllers');
+
+const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const authRoutes = require('./utils/auth');
-const homeRoutes = require('./controllers/home-routes');
-const { sessionSecret } = require('./utils/helpers');
-const multer = require('multer');
-//handlebars
-const exphbs = require('express-handlebars'); 
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// Set up the session middleware
-app.use(session({
-  secret: sessionSecret,
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store: new SequelizeStore({
-    db: sequelize,
-  }),
-}));
+    db: sequelize
+  })
+};
 
-// Set up middleware to parse incoming request bodies
+app.use(session(sess));
+
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Set up the view engine
-app.engine('handlebars', exphbs());
-app.set('view engine', 'ejs');
+app.use(routes);
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
-
-// Set up the routes
-app.use('/', homeRoutes);
-app.use('/auth', authRoutes);
-
-// Handle the form submission for posting a response
-app.post('/post-response/:postId', upload.single('response-image'), (req, res) => {
-  const postId = req.params.postId;
-  const responseText = req.body.responseText;
-  const songName = req.body.songName;
-  const artistName = req.body.artistName;
-  const albumName = req.body.albumName;
-  const feeling = req.body.feeling;
-  const userId = req.session.userId;
-  const imageFileName = req.file ? req.file.filename : null;
-
-  // Insert the response into the database
-  const sql = `
-    INSERT INTO responses (post_id, user_id, response_text, song_name, artist_name, album_name, feeling, image_filename)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  const values = [postId, userId, responseText, songName, artistName, albumName, feeling, imageFileName];
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.error('Error connecting to database:', err);
-      return res.status(500).send('Internal server error');
-    }
-    connection.query(sql, values, (err, result) => {
-      connection.release();
-      if (err) {
-        console.error('Error inserting response into database:', err);
-        return res.status(500).send('Internal server error');
-      }
-      res.redirect(`/post/${postId}`);
-    });
-  });
-});
-
-// Start the server
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening on port', PORT));
 });
