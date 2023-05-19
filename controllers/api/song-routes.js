@@ -33,6 +33,7 @@ router.post('/', async (req, res) => {
       res.status(500).json({ error: 'Failed to retrieve song' });
     }
   });
+
   // Delete a song
   router.delete('/:id', async (req, res) => {
     try {
@@ -52,5 +53,3 @@ router.post('/', async (req, res) => {
       res.status(500).json({ error: 'Failed to delete song' });
     }
   });
-
-  module.exports = router;
