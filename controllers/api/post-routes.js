@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../models');
+const { Post } = require('../../models');
 
 // Create a new post
 router.post('/', async (req, res) => {
@@ -38,5 +38,3 @@ async function fetchPictureFromAPI(feeling) {
     return null; // Return null or a default picture in case of an error
   }
 }
-
-module.exports = router;
