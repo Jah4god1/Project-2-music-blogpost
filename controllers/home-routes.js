@@ -33,4 +33,42 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+// Render the register page
+router.get('/register', (req, res) => {
+  // If a session exists, redirect the request to the homepage
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('register');
+});
+
+// Handle the registration process
+router.post('/register', async (req, res) => {
+  try {
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.redirect('/');
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+// Handle logout
+router.post('/logout', (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
+
 module.exports = router;

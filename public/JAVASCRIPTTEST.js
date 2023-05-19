@@ -1,3 +1,4 @@
+document.querySelector('#logout').addEventListener('click', logout);
 document.getElementById('pictureSelect').addEventListener('change', function() {
     var pictureContainer = document.getElementById('pictureContainer');
   
@@ -20,8 +21,18 @@ document.getElementById('pictureSelect').addEventListener('change', function() {
     }
   });
 
-
- 
+  async function logout() {
+    const response = await fetch('/logout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+  
+    if (response.ok) {
+      document.location.replace('/');
+    } else {
+      alert('Failed to log out.');
+    }
+  }
   
 
 
