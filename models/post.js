@@ -2,7 +2,6 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
-const mysql2 = require('mysql2'); 
 
 class Post extends Model {}
 

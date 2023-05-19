@@ -1,9 +1,6 @@
-//DOWNLOAD dependencies
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
-const mysql2 = require('mysql2'); 
-
 
 class User extends Model {
   checkPassword(loginPw) {
@@ -40,12 +37,6 @@ User.init(
     },
   },
   {
-    hooks: {
-      beforeCreate: async (newUserData) => {
-        newUserData.password = await bcrypt.hash(newUserData.password, 10);
-        return newUserData;
-      },
-    },
     sequelize,
     timestamps: false,
     freezeTableName: true,
@@ -53,5 +44,9 @@ User.init(
     modelName: 'user',
   }
 );
+
+User.beforeCreate(async (user) => {
+  user.password = await bcrypt.hash(user.password, 10);
+});
 
 module.exports = User;
