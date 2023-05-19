@@ -24,7 +24,7 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
   } else {
-    res.render('frontpage');
+    res.render('main');
   }
 });
 
@@ -53,6 +53,17 @@ router.post('/register', async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Failed to register user' });
   }
+});
+
+// Render the registration page
+router.get('/register', (req, res) => {
+  // If a session exists, redirect the request to the homepage
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('register');
 });
 
 // User login
@@ -84,11 +95,22 @@ router.post('/login', async (req, res) => {
   }
 });
 
+// Render the login page
+router.get('/login', (req, res) => {
+  // If a session exists, redirect the request to the homepage
+  if (req.session.logged_in) {
+    res.redirect('/');
+    return;
+  }
+
+  res.render('login');
+});
+
 // Handle logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
-      res.status(204).end();
+      res.redirect('/'); // Redirect to main page after logging out
     });
   } else {
     res.status(404).end();
@@ -106,7 +128,7 @@ router.post('/post', withAuth, async (req, res) => {
       userId: req.session.user_id // assuming user's ID is stored in session
     });
 
-    res.status(201).json(newPost);
+    res.redirect('/'); // redirect to homepage
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to create post' });
