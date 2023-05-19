@@ -1,0 +1,63 @@
+body {
+  position: relative;
+}
+
+.color-transition {
+    animation: blueToPurple 3s infinite;
+    font-weight: bolder;
+  }
+  
+  @keyframes blueToPurple {
+    0% {
+      color: blue;
+    }
+    50% {
+      color: rgba(158, 8, 245, 0.493);
+    }
+    100% {
+      color: blue;
+    }
+  }
+  
+  .text-bold {
+    font-weight: bold;
+  }
+  
+  .col-md-3 {
+    margin-top: 50px;
+  }
+  
+  .image-container img {
+    position: absolute;
+  }
+
+  .bottom-section {
+    background: linear-gradient(to right, #3652E1, #7851E8);
+    position: absolute;
+    top: 59%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -1;
+    color: white;
+    text-align: center;
+}
+
+.invisible-hr {
+  border-top: 1px solid #3652e100;
+}
+
+#pictureContainer{
+  min-height: 100%;
+  
+}
+
+  .picture-image {
+    width: 250px;  /* width of Instagram post */
+    height: 250px; 
+  }
+
+
+  
+  
+  

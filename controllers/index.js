@@ -1,18 +1,24 @@
-//TANNER
-const apiController = require('../controllers/apiController');
-const express = require('express');
-const router = express.Router();
-const songController = require('./songController');
-const userRoutes = require('./api/user-routes');
+const router = require('express').Router();
 
-// GET route to retrieve all songs
-router.get('/songs', songController.getAllSongs);
+const apiRoutes = require('./api');
+const homeRoutes = require('./homeRoutes');
 
-// POST route to add a new song
-router.post('/songs', songController.addNewSong);
-
-// sets up a middleware for handling requests with a URL starting with 
-//"/auth" and uses the routes defined in the userRoutes module
-app.use('/auth', userRoutes);
+router.use('/', home-routes);
+router.use('/api', apiRoutes);
 
 module.exports = router;
+
+const multer = require('multer');
+
+// Configure multer storage for image uploads
+const storage = multer.diskStorage({
+  destination: './uploads',
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, file.fieldname + '-' + uniqueSuffix);
+  },
+});
+const upload = multer({ storage });
+
+// API endpoint for image upload
+router.post('/images/upload', upload.single('image'), uploadImage);

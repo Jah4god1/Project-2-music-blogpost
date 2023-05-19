@@ -3,13 +3,6 @@ const Song = require('./song');
 const Post = require('./post');
 const PostSong = require('./PostSong');
 
-//ASSOCIATIONS (check over)
-//USER hasMany POST
-//POST belongsTo USER
-//POST hasOne SONG
-//SONG belongsToMany POST (through PostSong)
-//SONG belongsToMany USER (through PostSong)
-
 User.hasMany(Post, {
     foreignKey: 'user_id',
     onDelete: 'CASCADE'
@@ -45,3 +38,9 @@ module.exports = {
     Post,
 };
 
+//ASSOCIATIONS (check over)
+//USER hasMany POST
+//POST belongsTo USER
+//POST hasOne SONG
+//SONG belongsToMany POST (through PostSong)
+//SONG belongsToMany USER (through PostSong)

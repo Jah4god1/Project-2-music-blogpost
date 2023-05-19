@@ -1,80 +1,31 @@
-const express = require('express');
-const session = require('express-session');
-const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const authRoutes = require('./utils/auth');
-const homeRoutes = require('./controllers/home-routes');
-const { sessionSecret } = require('./utils/helpers');
-const multer = require('multer');
+const path = require('path'); //UTILITIES directory paths
+const express = require('express'); // EXPRESS.JS import
+const exphbs = require('express-handlebars');// RENDER HTML views
+const routes = require('./controllers'); // HANDLES routes for endpoints
+const helpers = require('./utils/helpers'); // HANDLES custom helper for hbs
+const sequelize = require('./config/connection'); //CONNECTION sequelize db
 
+//CREATE instance & PORT/default val
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// Set up the session middleware
-app.use(session({
-  secret: sessionSecret,
-  resave: false,
-  saveUninitialized: false,
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
-}));
+// CREATE Handlebars.js object using custom helpers
+const hbs = exphbs.create({ helpers });
 
-// Set up middleware to parse incoming request bodies
-app.use(express.urlencoded({ extended: true }));
+// NOTIFY Express.js of template selection
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
 
-// Set up the view engine
-app.set('view engine', 'ejs');
+//MIDDLEWARE config
+app.use(express.json());//PARSE w/ INCOMING REQUESTS
+app.use(express.urlencoded({ extended: true }));// PARSE w/ URL-encoded- Result=object on req.body.
+app.use(express.static(path.join(__dirname, 'public'))); //STATIC file server
+app.use('/images', express.static('images')); // SERVE static images from the 'images' folder
 
-// Set up multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/')
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname)
-  }
-})
-const upload = multer({ storage: storage })
+app.use(routes); //REGISTER defined routes
 
-// Set up the routes
-app.use('/', homeRoutes);
-app.use('/auth', authRoutes);
-
-// Handle the form submission for posting a response
-app.post('/post-response/:postId', upload.single('response-image'), (req, res) => {
-  const postId = req.params.postId;
-  const responseText = req.body.responseText;
-  const songName = req.body.songName;
-  const artistName = req.body.artistName;
-  const albumName = req.body.albumName;
-  const feeling = req.body.feeling;
-  const userId = req.session.userId;
-  const imageFileName = req.file ? req.file.filename : null;
-
-  // Insert the response into the database
-  const sql = `
-    INSERT INTO responses (post_id, user_id, response_text, song_name, artist_name, album_name, feeling, image_filename)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-  `;
-  const values = [postId, userId, responseText, songName, artistName, albumName, feeling, imageFileName];
-  db.getConnection((err, connection) => {
-    if (err) {
-      console.error('Error connecting to database:', err);
-      return res.status(500).send('Internal server error');
-    }
-    connection.query(sql, values, (err, result) => {
-      connection.release();
-      if (err) {
-        console.error('Error inserting response into database:', err);
-        return res.status(500).send('Internal server error');
-      }
-      res.redirect(`/post/${postId}`);
-    });
-  });
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });
 
-// Start the server
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
-});
