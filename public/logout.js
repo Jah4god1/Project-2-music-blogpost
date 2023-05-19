@@ -1,13 +1,14 @@
 logoutButton.addEventListener('click', async function() {
     try {
       // Send a POST request to the '/logout' route
-      const response = await fetch('/logout', {
+      const logoutResponse = await fetch('/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
       });
-      const response = await fetch("api/users/", {
+  
+      const userResponse = await fetch("api/users/", {
         method: "POST",
         body: JSON.stringify({
           username: username,
@@ -15,8 +16,9 @@ logoutButton.addEventListener('click', async function() {
         }),
         headers: { "Content-Type": "application/json" },
       });
+  
       // If the request was successful, reload the page
-      if (response.ok) {
+      if (logoutResponse.ok && userResponse.ok) {
         document.location.replace('/');
       } else {
         alert('Failed to log out.');
@@ -25,3 +27,4 @@ logoutButton.addEventListener('click', async function() {
       console.error(err);
     }
   });
+  
