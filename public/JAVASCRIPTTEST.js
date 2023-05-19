@@ -19,11 +19,3 @@ document.getElementById('pictureSelect').addEventListener('change', function() {
       //pictureContainer.style.backgroundImage=`url(${imgSrc})`;
     }
   });
-
-
- 
-  
-
-
-
-  

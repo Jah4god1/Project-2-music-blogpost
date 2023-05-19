@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Form</title>
+    <title>Signup Form</title>
     <!-- Add Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <!-- ... rest of the head ... -->
@@ -11,9 +11,17 @@
         <!-- ... rest of the nav ... -->
     </nav>
     <div class="container">
-        <h2 class="text-center">Login Form</h2>
+        <h2 class="text-center">Signup Form</h2>
         <div class="form-container">
             <form>
+                <div class="form-group">
+                    <label for="inputEmail"></label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{email}}">
+                </div>
+                <div class="form-group">
+                    <label for="inputFullName"></label>
+                    <input type="text" class="form-control" id="inputFullName" placeholder="Full Name" value="{{fullName}}">
+                </div>
                 <div class="form-group">
                     <label for="inputUsername"></label>
                     <input type="text" class="form-control" id="inputUsername" placeholder="Username" value="{{username}}">
@@ -22,7 +30,7 @@
                     <label for="inputPassword"></label>
                     <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="{{password}}">
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Log in</button>
+                <button type="submit" class="btn btn-primary btn-block">Sign up</button>
             </form>
         </div>
     </div>
