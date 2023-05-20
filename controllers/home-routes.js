@@ -1,12 +1,10 @@
 const router = require('express').Router();
-const { User } = require('../models');
+const { User, Post } = require('../models');
 const withAuth = require('../utils/auth');
 const bcrypt = require('bcrypt');
-const { Post } = require('../models');
 
-// Get the homepage
+
 router.get('/', async (req, res) => {
-  // If user is logged in, show homepage. If not, show login/register page.
   if (req.session.logged_in) {
     try {
       const userData = await User.findAll({
@@ -14,10 +12,16 @@ router.get('/', async (req, res) => {
         order: [['name', 'ASC']],
       });
 
+      const postData = await Post.findAll({
+        order: [['createdAt', 'DESC']],
+      });
+
       const users = userData.map((user) => user.get({ plain: true }));
+      const posts = postData.map((post) => post.get({ plain: true }));
 
       res.render('homepage', {
         users,
+        posts,
         logged_in: req.session.logged_in,
       });
     } catch (err) {
@@ -27,6 +31,7 @@ router.get('/', async (req, res) => {
     res.render('main');
   }
 });
+
 
 // Register new user
 router.post('/register', async (req, res) => {
@@ -118,7 +123,7 @@ router.post('/logout', (req, res) => {
 });
 
 // Create new post
-router.post('/post', withAuth, async (req, res) => {
+router.post('/post', async (req, res) => {
   try {
     const { title, content } = req.body;
 
@@ -134,6 +139,7 @@ router.post('/post', withAuth, async (req, res) => {
     res.status(500).json({ error: 'Failed to create post' });
   }
 });
+
 
 // Get the homepage
 router.get('/', async (req, res) => {
