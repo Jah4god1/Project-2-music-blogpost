@@ -135,4 +135,37 @@ router.post('/post', withAuth, async (req, res) => {
   }
 });
 
+// Get the homepage
+router.get('/', async (req, res) => {
+  // If user is logged in, show homepage. If not, show login/register page.
+  if (req.session.logged_in) {
+    try {
+      const userData = await User.findAll({
+        attributes: { exclude: ['password'] },
+        order: [['name', 'ASC']],
+      });
+
+      // Fetch posts from the database
+      const postData = await Post.findAll({
+        order: [['createdAt', 'DESC']],
+      });
+
+      const users = userData.map((user) => user.get({ plain: true }));
+
+      // Convert the posts data to a plain object
+      const posts = postData.map((post) => post.get({ plain: true }));
+
+      res.render('homepage', {
+        users,
+        posts, // Pass the posts to your view
+        logged_in: req.session.logged_in,
+      });
+    } catch (err) {
+      res.status(500).json(err);
+    }
+  } else {
+    res.render('main');
+  }
+});
+
 module.exports = router;

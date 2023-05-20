@@ -13,11 +13,11 @@ Post.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
+    songName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    body: {
+    artist: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
