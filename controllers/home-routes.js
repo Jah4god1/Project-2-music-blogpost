@@ -3,7 +3,7 @@ const { User, Post } = require('../models');
 const withAuth = require('../utils/auth');
 const bcrypt = require('bcrypt');
 
-
+//Showing homepage if logged in
 router.get('/', async (req, res) => {
   if (req.session.logged_in) {
     try {
@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         attributes: { exclude: ['password'] },
         order: [['name', 'ASC']],
       });
-
+      
       const postData = await Post.findAll({
         order: [['createdAt', 'DESC']],
       });
@@ -125,11 +125,16 @@ router.post('/logout', (req, res) => {
 // Create new post
 router.post('/post', async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { songName, artist } = req.body;
+
+    // Check if songName or artist are missing or empty
+    if (!songName || !artist) {
+      return res.status(400).json({ error: 'songName and artist are required' });
+    }
 
     const newPost = await Post.create({ 
-      title, 
-      content, 
+      songName, 
+      artist, 
       userId: req.session.user_id // assuming user's ID is stored in session
     });
 
