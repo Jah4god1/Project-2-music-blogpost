@@ -1,4 +1,4 @@
-# classify.mood Logo
+# classify.mood
 
 # Introduction
 Welcome to classify.mood - a personalized music social network for both music enthusiasts and casual listeners alike. With classify.mood, your music experience is no longer just personal—it's social, it's interactive, and it's exciting. Uncover new songs perfectly suited to your mood or activity, and enjoy music the way it's meant to be - shared and savored.
