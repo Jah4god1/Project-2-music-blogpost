@@ -4,12 +4,13 @@ const exphbs = require('express-handlebars');// RENDER HTML views
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const routes = require('./controllers'); // HANDLES routes for endpoints
 const helpers = require('./utils/helpers'); // HANDLES custom helper for hbs
 const sequelize = require('./config/connection'); //CONNECTION sequelize db
 
-dotenv.config();
+// dotenv.config();
 
 //CREATE instance & PORT/default val
 const app = express();
@@ -23,7 +24,10 @@ app.use(cookieParser());
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  store: new SequelizeStore({
+    db: sequelize
+  })
 }));
 
 // NOTIFY Express.js of template selection
@@ -34,15 +38,15 @@ app.set('view engine', 'handlebars');
 app.use(express.json());//PARSE w/ INCOMING REQUESTS
 app.use(express.urlencoded({ extended: true }));// PARSE w/ URL-encoded- Result=object on req.body.
 app.use(express.static(path.join(__dirname, 'public'))); //STATIC file server
-app.use('/images', express.static('images')); // SERVE static images from the 'images' folder
+
 
 app.use(routes); //REGISTER defined routes
 
 // Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).json({ message: 'An unexpected error occurred' });
-});
+// app.use((err, req, res, next) => {
+//   console.error(err);
+//   res.status(500).json({ message: 'An unexpected error occurred' });
+// });
 
 //Start server
 sequelize.sync({ force: false }).then(() => {
