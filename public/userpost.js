@@ -19,28 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // Append the image to the picture container
       pictureContainer.appendChild(image);
     });
+  })
   
-    // Add event listener to the post form
-    var postForm = document.querySelector('.form-container form');
-    postForm.addEventListener('submit', function(event) {
-      event.preventDefault();
-  
-      // Get the song title and artist/band name inputs
-      var songTitleInput = document.getElementById('inputUsername');
-      var artistNameInput = document.getElementById('inputPassword');
-  
-      // Get the values from the inputs
-      var songTitle = songTitleInput.value;
-      var artistName = artistNameInput.value;
-  
-      // Clear the inputs
-      songTitleInput.value = '';
-      artistNameInput.value = '';
-  
-      // Display the posted content
-      var postedContent = document.createElement('p');
-      postedContent.textContent = 'Posted: ' + songTitle + ' by ' + artistName;
-      pictureContainer.appendChild(postedContent);
-    });
-  });
-  
+    // Add event listener to the post fo
