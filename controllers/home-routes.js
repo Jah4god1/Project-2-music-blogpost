@@ -175,7 +175,7 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
   } else {
-    res.render('main');
+    res.render('../views/layouts/main');
   }
 });
 
