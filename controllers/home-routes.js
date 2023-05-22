@@ -62,12 +62,13 @@ router.post('/signup', async (req, res) => {
 // Render the registration page
 router.get('/signup', (req, res) => {
   // If a session exists, redirect the request to the homepage
+  console.log('clicked sign up')
   if (req.session.logged_in) {
     res.redirect('/userhome');
     return;
   }
 
-  res.render('signup');
+  res.render('../views/signup.handlebars');
 });
 
 // User login
