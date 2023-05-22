@@ -37,7 +37,7 @@ app.set('view engine', 'handlebars');
 //MIDDLEWARE config
 app.use(express.json());//PARSE w/ INCOMING REQUESTS
 app.use(express.urlencoded({ extended: true }));// PARSE w/ URL-encoded- Result=object on req.body.
-app.use(express.static(path.join(__dirname, 'public'))); //STATIC file server
+app.use(express.static(path.join(__dirname, 'views'))); //STATIC file server
 
 
 app.use(routes); //REGISTER defined routes
