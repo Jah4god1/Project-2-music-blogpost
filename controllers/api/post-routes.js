@@ -1,21 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { Post } = require('../../models');
+const { User, Post } = require('../../models');
 
 // Create a new post
 router.post('/', async (req, res) => {
   try {
-    const { songName, artist, feeling } = req.body;
+    const { songName, artist, } = req.body;
+    const userId = req.session.user_id; // assuming user's ID is stored in session
 
-    // Fetch picture from API based on the selected feeling
-    const picture = await fetchPictureFromAPI(feeling);
-
-    // Create the post with song name, artist, feeling, and picture
+    // Create the post with song name, artist, and userId
     const post = await Post.create({
+      userId,
       songName,
       artist,
-      feeling,
-      picture,
     });
 
     res.status(201).json(post);
@@ -25,19 +22,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Function to fetch a picture from the API based on the selected feeling
-async function fetchPictureFromAPI(feeling) {
-  try {
-    // Make an API call to fetch the picture based on the feeling
-    const response = await axios.get(`API_URL/${feeling}`);
-    const picture = response.data.picture;
-
-    return picture;
-  } catch (err) {
-    console.error(err);
-    return null; // Return null or a default picture in case of an error
-  }
-}
 
 // CREATE a new post
 router.post('/post', withAuth, async (req, res) => {
@@ -57,4 +41,6 @@ router.post('/post', withAuth, async (req, res) => {
   }
 });
 
-module.exports = router
+
+module.exports = router;
+
