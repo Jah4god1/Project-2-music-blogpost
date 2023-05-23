@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Post } = require('../../models');
 
+
 // Create a new post
 router.post('/', async (req, res) => {
   try {
@@ -24,7 +25,7 @@ router.post('/', async (req, res) => {
 
 
 // CREATE a new post
-router.post('/post', withAuth, async (req, res) => {
+router.post('/post', async (req, res) => {
   try {
     const { title, content } = req.body;
 
