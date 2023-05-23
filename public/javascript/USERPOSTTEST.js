@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .then(data => {
       // After the server responds, redirect to the user home page
-      window.location.href = "./miccitestuserhome.html";
+      window.location.href = "../../views/userhome.handlebars";
     })
     .catch((error) => {
       console.error('Error:', error);
