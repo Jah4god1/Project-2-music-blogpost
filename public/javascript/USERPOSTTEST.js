@@ -57,7 +57,13 @@ document.addEventListener('DOMContentLoaded', function() {
         image: selectedImage
       }),
     })
-    .then(response => response.json())
+    .then(response => {
+      // Check if the response status is OK (200-299)
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then(data => {
       // After the server responds, redirect to the user home page
       window.location.href = "./miccitestuserhome.html";
