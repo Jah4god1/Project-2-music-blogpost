@@ -38,3 +38,23 @@ async function fetchPictureFromAPI(feeling) {
     return null; // Return null or a default picture in case of an error
   }
 }
+
+// CREATE a new post
+router.post('/post', withAuth, async (req, res) => {
+  try {
+    const { title, content } = req.body;
+
+    const newPost = await Post.create({ 
+      title, 
+      content, 
+      userId: req.session.user_id // 
+    });
+
+    res.redirect('/'); // REDIRECT to homepage
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to create post' });
+  }
+});
+
+module.exports = router
