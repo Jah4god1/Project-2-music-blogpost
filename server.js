@@ -10,7 +10,7 @@ const routes = require('./controllers'); // HANDLES routes for endpoints
 const helpers = require('./utils/helpers'); // HANDLES custom helper for hbs
 const sequelize = require('./config/connection'); //CONNECTION sequelize db
 
-// dotenv.config();
+dotenv.config();
 
 //CREATE instance & PORT/default val
 const app = express();
