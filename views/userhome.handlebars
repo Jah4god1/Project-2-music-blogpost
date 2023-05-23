@@ -1,40 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Home</title>
-     <!-- Add Bootstrap CSS -->
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Signup Form</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/miccitest.css">
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-purple ">
-        <a class="navbar-brand" href="#">Music Blog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <style>
-            .navbar-purple {
-              background-color: rgba(248, 226, 255, 0.2);
-            }
-          </style>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Login</a>
-            </li>
-          </ul>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-purple ">
+     <a class="navbar-brand" href="#">Music Blog</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+     <style>
+         .navbar-purple {
+           background-color: rgba(248, 226, 255, 0.2);
+         }
+       </style>
+     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+       <ul class="navbar-nav">
+         <li class="nav-item active">
+           <a class="nav-link" href="C:/Users/Micci/Desktop/Project-2-music-blogpost/views/layouts/main.handlebars">Home</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="#">About</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="C:/Users/Micci/Desktop/Project-2-music-blogpost/views/layouts/login.handlebars">Login</a>
+         </li>
+       </ul>
+     </div>
+   </nav>
+    <div class="container">
+        <h2 class="text-center">Signup Form</h2>
+        <div class="form-container">
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="inputEmail"></label>
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="inputFullName"></label>
+                    <input type="text" class="form-control" id="inputFullName" placeholder="Full Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputUsername"></label>
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword"></label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"><a href="../views/post.handlebars"style="color:white">Sign up</a></button>
+            </form>
         </div>
-      </nav>
+    </div>
+    
+
+    <!-- Add Bootstrap JS and its dependencies -->
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="../public/javascript/USERHOMETEST.JS"></script>
 </body>
 </html>
-
-
