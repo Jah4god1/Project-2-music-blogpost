@@ -64,10 +64,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-
-  }
-});
-
 // HANDLE logout
 router.post('/logout', (req, res) => {
   if (req.session.logged_in) {
