@@ -4,6 +4,8 @@ const withAuth = require('../utils/auth');
 const bcrypt = require('bcrypt');
 const { Post } = require('../models');
 
+const { Home } = require('../models'); // Replace 'YourModel' with your Sequelize model
+
 // Get the homepage
 router.get('/', async (req, res) => {
   // If user is logged in, show homepage. If not, show login/register page.
