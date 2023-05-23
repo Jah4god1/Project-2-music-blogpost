@@ -1,53 +1,67 @@
-const express = require('express');
+//DO NOT NEED PASSWORD MANAGER
+//bcrypt dependency located in models/user.js 
+//CHECK path
 const router = express.Router();
 const { User } = require('../../models');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
-// Secret key for JWT
-const secretKey = 'your-secret-key';
-
-// User registration route
-router.post('/register', async (req, res) => {
+//NEED POST endpoints 
+//CREATE
+router.post('/', async(req, res) => {
   try {
-    const { username, password } = req.body;
-    // Check if the username already exists
-    const existingUser = await User.findOne({ where: { username } });
-    if (existingUser) {
-      return res.status(409).json({ message: 'Username already exists' });
-    }
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
-    // Create a new user
-    await User.create({ username, password: hashedPassword });
-    return res.status(201).json({ message: 'User registered successfully' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.user_id = userData.is;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
   }
 });
 
-// User login route
+//LOGIN endpoint (find User)
 router.post('/login', async (req, res) => {
   try {
-    const { username, password } = req.body;
-    // Find the user by username
-    const user = await User.findOne({ where: { username } });
-    // Check if the user exists
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+    const userData = await User.findOne({where: {email: req.body.email} });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json ({ message: 'Incorrect email or password, please try again'});
+        return;
     }
-    // Compare the provided password with the stored hashed password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid password' });
+//COMPARES hashed password against stored password
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or passwork, please try again'});
+      return;
     }
-    // Generate a JWT token
-    const token = jwt.sign({ username }, secretKey);
-    return res.status(200).json({ token });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: 'Internal server error' });
+
+//UPDATE
+    req.session.save(() =>  {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json ({ user: userData, message: 'You are now logged in!'});
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//LOGOUT
+router.post('/logout', (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
   }
 });
 
