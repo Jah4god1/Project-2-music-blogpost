@@ -2,6 +2,7 @@
 const { Model, DataTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
+const User = require('./user');
 
 class Post extends Model {}
 
@@ -13,11 +14,11 @@ Post.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    title: {
+    songName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    body: {
+    artist: {
       type: DataTypes.TEXT,
       allowNull: false,
     },

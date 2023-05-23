@@ -1,4 +1,5 @@
 const router = require('express').Router();
+
 const { User } = require('../models/user');
 const withAuth = require('../utils/auth');
 const bcrypt = require('bcrypt');
@@ -8,20 +9,28 @@ const { Post } = require('../models/post');
 router.get('/', async (req, res) => {
   try {
     if (req.session.logged_in) {
+
       const userData = await User.findAll({
         attributes: { exclude: ['password'] },
         order: [['name', 'ASC']],
       });
+      
+      const postData = await Post.findAll({
+        order: [['createdAt', 'DESC']],
+      });
 
       const users = userData.map((user) => user.get({ plain: true }));
+      const posts = postData.map((post) => post.get({ plain: true }));
 
       res.render('homepage', {
         users,
+        posts,
         logged_in: req.session.logged_in,
       });
     } else {
       res.render('main');
     }
+
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to load homepage' });
@@ -30,6 +39,7 @@ router.get('/', async (req, res) => {
 
 // REGISTER new user
 router.post('/register', async (req, res) => {
+
   try {
     const { username, email, password } = req.body;
 
@@ -54,12 +64,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// RENDER the registration page
-router.get('/register', (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect('/');
-  } else {
-    res.render('register');
+
   }
 });
 
@@ -73,5 +78,6 @@ router.post('/logout', (req, res) => {
     res.status(404).end();
   }
 });
+
 
 module.exports = router;

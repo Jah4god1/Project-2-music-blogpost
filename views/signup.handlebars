@@ -3,39 +3,71 @@
 <head>
     <title>Signup Form</title>
     <!-- Add Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <!-- ... rest of the head ... -->
+    {{!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/jass.css"> --}}
+    <style>
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-purple ">
-        <!-- ... rest of the nav ... -->
-    </nav>
+        <a class="navbar-brand" href="#">Music Blog</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <style>
+            .navbar-purple {
+              background-color: rgba(248, 226, 255, 0.2);
+            }
+          </style>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Login</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     <div class="container">
         <h2 class="text-center">Signup Form</h2>
         <div class="form-container">
             <form>
                 <div class="form-group">
                     <label for="inputEmail"></label>
-                    <input type="email" class="form-control" id="inputEmail" placeholder="Email" value="{{email}}">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
                 </div>
                 <div class="form-group">
                     <label for="inputFullName"></label>
-                    <input type="text" class="form-control" id="inputFullName" placeholder="Full Name" value="{{fullName}}">
+                    <input type="text" class="form-control" id="inputFullName" placeholder="Full Name">
                 </div>
                 <div class="form-group">
                     <label for="inputUsername"></label>
-                    <input type="text" class="form-control" id="inputUsername" placeholder="Username" value="{{username}}">
+                    <input type="text" class="form-control" id="inputUsername" placeholder="Username">
                 </div>
                 <div class="form-group">
                     <label for="inputPassword"></label>
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password" value="{{password}}">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">Sign up</button>
             </form>
         </div>
     </div>
+    
 
     <!-- Add Bootstrap JS and its dependencies -->
-    <!-- ... rest of the body ... -->
+    <script src="signup.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
