@@ -1,7 +1,69 @@
-const express = require('express');
+//DO NOT NEED PASSWORD MANAGER
+//bcrypt dependency located in models/user.js 
+//CHECK path
 const router = express.Router();
 const { User } = require('../../models');
-const bcrypt = require('bcrypt');
+
+//NEED POST endpoints 
+//CREATE
+router.post('/', async(req, res) => {
+  try {
+    const userData = await User.create(req.body);
+
+    req.session.save(() => {
+      req.session.user_id = userData.is;
+      req.session.logged_in = true;
+
+      res.status(200).json(userData);
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//LOGIN endpoint (find User)
+router.post('/login', async (req, res) => {
+  try {
+    const userData = await User.findOne({where: {email: req.body.email} });
+
+    if (!userData) {
+      res
+        .status(400)
+        .json ({ message: 'Incorrect email or password, please try again'});
+        return;
+    }
+//COMPARES hashed password against stored password
+    const validPassword = await userData.checkPassword(req.body.password);
+
+    if (!validPassword) {
+      res
+        .status(400)
+        .json({ message: 'Incorrect email or passwork, please try again'});
+      return;
+    }
+
+//UPDATE
+    req.session.save(() =>  {
+      req.session.user_id = userData.id;
+      req.session.logged_in = true;
+
+      res.json ({ user: userData, message: 'You are now logged in!'});
+    });
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+//LOGOUT
+router.post('/logout', (req, res) => {
+  if (req.session.logged_in) {
+    req.session.destroy(() => {
+      res.status(204).end();
+    });
+  } else {
+    res.status(404).end();
+  }
+});
 
 // Delete user account
 router.delete('/:id', async (req, res) => {
