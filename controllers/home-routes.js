@@ -28,13 +28,12 @@ router.get('/', async (req, res) => {
       res.status(500).json(err);
     }
   } else {
-    res.render('main');
+    res.render('layouts/main');
   }
 });
 
-
 // Register new user
-router.post('/register', async (req, res) => {
+router.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
@@ -61,14 +60,15 @@ router.post('/register', async (req, res) => {
 });
 
 // Render the registration page
-router.get('/register', (req, res) => {
+router.get('/signup', (req, res) => {
   // If a session exists, redirect the request to the homepage
+  console.log('clicked sign up')
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/userhome');
     return;
   }
 
-  res.render('register');
+  res.render('../views/signup.handlebars');
 });
 
 // User login
@@ -104,7 +104,7 @@ router.post('/login', async (req, res) => {
 router.get('/login', (req, res) => {
   // If a session exists, redirect the request to the homepage
   if (req.session.logged_in) {
-    res.redirect('/');
+    res.redirect('/userhome');
     return;
   }
 
@@ -138,44 +138,10 @@ router.post('/post', async (req, res) => {
       userId: req.session.user_id // assuming user's ID is stored in session
     });
 
-    res.redirect('/'); // redirect to homepage
+    res.redirect('/userhome'); // redirect to homepage
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Failed to create post' });
-  }
-});
-
-
-// Get the homepage
-router.get('/', async (req, res) => {
-  // If user is logged in, show homepage. If not, show login/register page.
-  if (req.session.logged_in) {
-    try {
-      const userData = await User.findAll({
-        attributes: { exclude: ['password'] },
-        order: [['name', 'ASC']],
-      });
-
-      // Fetch posts from the database
-      const postData = await Post.findAll({
-        order: [['createdAt', 'DESC']],
-      });
-
-      const users = userData.map((user) => user.get({ plain: true }));
-
-      // Convert the posts data to a plain object
-      const posts = postData.map((post) => post.get({ plain: true }));
-
-      res.render('homepage', {
-        users,
-        posts, // Pass the posts to your view
-        logged_in: req.session.logged_in,
-      });
-    } catch (err) {
-      res.status(500).json(err);
-    }
-  } else {
-    res.render('main');
   }
 });
 
