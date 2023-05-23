@@ -1,22 +1,32 @@
-//DO NOT NEED PASSWORD MANAGER
 //bcrypt dependency located in models/user.js 
-//CHECK path
+//CHECK paths
 const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
+const { hashPassword, checkPassword } = require('./auth');//ADDED
 
-//NEED POST endpoints 
-//CREATE
+// MIDDLEWARE- authenticate user (NEW)
+const authenticateUser = (req, res, next) => {
+  if (req.session.logged_in) {
+    // USER logged in, proceed
+    next();
+  } else {
+    // USER NOT logged in, send error
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+};
+
+//CREATE REGISTRATION
 router.post('/', async(req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const hashedPassword = await hashPassword(req.body.password);
 
-    req.session.save(() => {
-      req.session.user_id = userData.is;
-      req.session.logged_in = true;
-
-      res.status(200).json(userData);
+    // CREATE NEW
+    const userData = await User.create({
+      email: req.body.email,
+      password: hashedPassword,
     });
+
   } catch (err) {
     res.status(400).json(err);
   }
@@ -55,8 +65,8 @@ router.post('/login', async (req, res) => {
   }
 });
 
-//LOGOUT
-router.post('/logout', (req, res) => {
+//LOGOUT- Requires authentication (NEW)
+router.post('/logout', authenticateUser,(req, res) => {
   if (req.session.logged_in) {
     req.session.destroy(() => {
       res.status(204).end();
@@ -66,8 +76,8 @@ router.post('/logout', (req, res) => {
   }
 });
 
-// Delete user account
-router.delete('/:id', async (req, res) => {
+// DELETE user account - Requires authentication
+router.delete('/:id', authenticateUser, async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -81,12 +91,12 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-// Delete a user's post
-router.delete('/posts/:postId', async (req, res) => {
+// DELETE a user's post - Requires authentication
+router.delete('/posts/:postId', authenticateUser, async (req, res) => {
   try {
     const { postId } = req.params;
 
-    // Delete the post by its ID
+    // DELETE post by its ID
     await Post.destroy({ where: { id: postId } });
 
     res.status(204).end();
