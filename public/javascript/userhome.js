@@ -1,22 +1,23 @@
-var homeLink = document.querySelector('.navbar-brand');
-       homeLink.addEventListener('click', function(event) {
-           event.preventDefault();
-           alert('Home link clicked!');
-           // Add your desired functionality here
-       });
-
-       // Event listener for the About link
-       var aboutLink = document.querySelector('.nav-link[href="#"]');
-       aboutLink.addEventListener('click', function(event) {
-           event.preventDefault();
-           alert('About link clicked!');
-           // Add your desired functionality here
-       });
-
-       // Event listener for the Login link
-       var loginLink = document.querySelector('.nav-link[href="C:/Users/Micci/Desktop/Project-2-music-blogpost/public/micciloginform.html"]');
-       loginLink.addEventListener('click', function(event) {
-           event.preventDefault();
-           alert('Login link clicked!');
-           // Add your desired functionality here
-       });
+// When the "USERHOME" page loads
+window.addEventListener('DOMContentLoaded', (event) => {
+    // Send a request to the server for all posts
+    fetch('/posts')
+    .then(response => response.json())
+    .then(posts => {
+      // Loop through each post and create an HTML element for it
+      posts.forEach(post => {
+        // Create a new paragraph element
+        var postElement = document.createElement('p');
+  
+        // Set the text content of the paragraph
+        postElement.textContent = post.title + ' by ' + post.artist;
+  
+        // Append the paragraph to the body of the page
+        document.body.appendChild(postElement);
+      });
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  });
+  
