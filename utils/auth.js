@@ -1,14 +1,23 @@
-//ALL NEW function 
-const authenticateUser = (req, res, next) => {
-  if (req.session.logged_in) {
-    // PROCEED if logged in
-    next();
-  } 
-  else {
-    // SEND error or redirect if NOT logged in
-    res.status(401).json({ error: 'Unauthorized' });
-  }
+const bcrypt = require('bcrypt');
+
+// HASH password function
+const hashPassword = async (password) => {
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(password, saltRounds);
+  return hashedPassword;
 };
+
+// COMPARE password matches the stored hashed password function
+const checkPassword = async (password, hashedPassword) => {
+  const passwordMatch = await bcrypt.compare(password, hashedPassword);
+  return passwordMatch;
+};
+
+module.exports = {
+  hashPassword,
+  checkPassword,
+};
+
 
 /*OLD AUTH.JS
 const bcrypt = require('bcrypt');
