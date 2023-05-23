@@ -1,3 +1,16 @@
+//ALL NEW function 
+const authenticateUser = (req, res, next) => {
+  if (req.session.logged_in) {
+    // PROCEED if logged in
+    next();
+  } 
+  else {
+    // SEND error or redirect if NOT logged in
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+};
+
+/*OLD AUTH.JS
 const bcrypt = require('bcrypt');
 const { validationResult, body } = require('express-validator');
 const User = require('../models/user');
@@ -63,3 +76,4 @@ exports.logout = (req, res) => {
     res.redirect('/');
   });
 };
+*/
