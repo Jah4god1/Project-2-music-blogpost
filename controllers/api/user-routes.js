@@ -1,6 +1,7 @@
 //DO NOT NEED PASSWORD MANAGER
 //bcrypt dependency located in models/user.js 
 //CHECK path
+const express = require('express');
 const router = express.Router();
 const { User } = require('../../models');
 
