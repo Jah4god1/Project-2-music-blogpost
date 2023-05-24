@@ -21,7 +21,7 @@ router.get('/userhome', withAuth, async (req, res) => {
 
     res.render('userhome', {
       ...user,
-      style: "userhome.css",
+      // style: "userhome.css",
       logged_in: true
     });
   } catch (err) {
