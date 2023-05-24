@@ -1,79 +1,51 @@
 const router = require('express').Router();
-
-const { User } = require('../models/user');
+const { User, Post } = require('../models');
 const withAuth = require('../utils/auth');
-const bcrypt = require('bcrypt');
-const { Post } = require('../models/post');
 
-// GET the homepage
-router.get('/', async (req, res) => {
-  try {
-    if (req.session.logged_in) {
-
-      const userData = await User.findAll({
-        attributes: { exclude: ['password'] },
-        order: [['name', 'ASC']],
-      });
-      
-      const postData = await Post.findAll({
-        order: [['createdAt', 'DESC']],
-      });
-
-      const users = userData.map((user) => user.get({ plain: true }));
-      const posts = postData.map((post) => post.get({ plain: true }));
-
-      res.render('userhome', {
-        users,
-        posts,
-        logged_in: req.session.logged_in,
-      });
-    } else {
-      res.render('main');
-    }
-
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to load homepage' });
-  }
+// Route to render the main page
+router.get('/', (req, res) => {
+  res.render('main');
 });
 
-// REGISTER new user
-router.post('/register', async (req, res) => {
-
+// Use withAuth middleware to prevent access to route
+router.get('/userhome', withAuth, async (req, res) => {
   try {
-    const { username, email, password } = req.body;
-
-    const existingUser = await User.findOne({ where: { email } });
-
-    if (existingUser) {
-      return res.status(400).json({ error: 'User already exists' });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const user = await User.create({ username, email, password: hashedPassword });
-
-    req.session.user_id = user.id;
-    req.session.logged_in = true;
-    req.session.save();
-
-    res.status(201).json(user);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to register user' });
-  }
-});
-
-// HANDLE logout
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.redirect('/'); // REDIRECT to the main page after logging out
+    // Find the logged in user based on the session ID
+    const userData = await User.findByPk(req.session.user_id, {
+      attributes: { exclude: ['password'] },
+      include: [{ model: Post }],
     });
-  } else {
-    res.status(404).end();
+
+    const user = userData.get({ plain: true });
+
+    res.render('userhome', {
+      ...user,
+      logged_in: true
+    });
+  } catch (err) {
+    res.status(500).json(err);
   }
 });
 
+router.get('/login', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/userhome');
+    return;
+  }
+
+  res.render('login');
+});
+
+
+router.get('/signup', (req, res) => {
+  // If the user is already logged in, redirect the request to another route
+  if (req.session.logged_in) {
+    res.redirect('/userhome');
+    return;
+  }
+
+  res.render('signup');
+});
 
 module.exports = router;
