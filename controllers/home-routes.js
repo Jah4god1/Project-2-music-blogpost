@@ -4,7 +4,8 @@ const withAuth = require('../utils/auth');
 
 // Route to render the main page
 router.get('/', (req, res) => {
-  res.render('main');
+  console.log('i made it to this route')
+  res.render('frontpage');
 });
 
 // Use withAuth middleware to prevent access to route
@@ -24,7 +25,10 @@ router.get('/userhome', withAuth, async (req, res) => {
     });
   } catch (err) {
     res.status(500).json(err);
+  }finally{
+    res.render('frontpage');
   }
+  
 });
 
 router.get('/login', (req, res) => {
@@ -49,3 +53,16 @@ router.get('/signup', (req, res) => {
 });
 
 module.exports = router;
+
+// app.get("/profile", (req, res) => {
+//   db.Joke.findAll({ raw: true, where: { UserId: req.user.id } }).then(
+//     (data) => {
+//       const userList = {
+//         Joke: data,
+//         style: "profile.css",
+//         logic: "profile.js",
+//       };
+//       res.render("profile", userList);
+//     }
+//   );
+// });
