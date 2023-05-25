@@ -1,10 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Select the picture container and the picture select element
   var pictureContainer = document.getElementById('pictureContainer');
   var pictureSelect = document.getElementById('pictureSelect');
 
   // Add event listener to the picture select element
-  pictureSelect.addEventListener('change', function() {
+  pictureSelect.addEventListener('change', function () {
     // Get the selected option value
     var selectedOption = pictureSelect.value;
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Add event listener to the post form
   var postForm = document.querySelector('.form-container form');
-  postForm.addEventListener('submit', function(event) {
+  postForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
     // Get the song title and artist/band name inputs
@@ -57,19 +57,19 @@ document.addEventListener('DOMContentLoaded', function() {
         image: selectedImage
       }),
     })
-    .then(response => {
-      // Check if the response status is OK (200-299)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      // After the server responds, redirect to the user home page
-      window.location.href = "../../views/userhome.handlebars";
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then(response => {
+        // Check if the response status is OK (200-299)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        // After the server responds, redirect to the user home page
+        window.location.href = "../../views/userhome.handlebars";
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   });
 });
