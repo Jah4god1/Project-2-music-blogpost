@@ -1,33 +1,31 @@
+<!-- Mood Selection  -->
+<div class="d-flex justify-content-center">
+  <select id="pictureSelect">
+    <option value="">--Please choose an option--</option>
+    {{#each moodOptions}}
+    <option value="{{this.value}}">{{this.text}}</option>
+    {{/each}}
+  </select>
+</div>
 
+<!-- ... rest of the body ... -->
 
-    <!-- Mood Selection  -->
-    <div class="d-flex justify-content-center">
-        <select id="pictureSelect">
-          <option value="">--Please choose an option--</option>
-          {{#each moodOptions}}
-          <option value="{{this.value}}">{{this.text}}</option>
-          {{/each}}
-        </select>
-    </div>
+<!-- Post Form  -->
+<div class="container">
+  <div class="form-container">
+    <form>
+      <div class="form-group">
+        <label for="inputSongTitle"></label>
+        <input type="text" class="form-control-sm d-block mx-auto" id="inputUsername" placeholder="Song Title"
+          value="{{songTitle}}">
+        <label for="inputArtistBandName"></label>
+        <input type="password" class="form-control-sm d-block mx-auto" id="inputPassword" placeholder="Artist/Band Name"
+          value="{{artistBandName}}">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
+    </form>
+  </div>
+</div>
 
-    <!-- ... rest of the body ... -->
-
-    <!-- Post Form  -->
-    <div class="container">
-        <div class="form-container">
-            <form>
-                <div class="form-group">
-                    <label for="inputSongTitle"></label>
-                    <input type="text" class="form-control-sm d-block mx-auto" id="inputUsername" placeholder="Song Title" value="{{songTitle}}">
-                    <label for="inputArtistBandName"></label>
-                    <input type="password" class="form-control-sm d-block mx-auto" id="inputPassword" placeholder="Artist/Band Name" value="{{artistBandName}}">
-                </div>
-                <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
-            </form>
-        </div>
-     </div>  
-
-    <script src="./javascript/USERPOSTTEST.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-
+<script src="./javascript/userpost.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

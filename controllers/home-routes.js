@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-// router.get('/userhome', withAuth, async (req, res) => {
-  router.get('/userhome', async (req, res) => {
+router.get('/userhome', withAuth, async (req, res) => {
+  // router.get('/userhome', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
     const userData = await User.findByPk(req.session.user_id, {
@@ -23,7 +23,7 @@ router.get('/', (req, res) => {
     res.render('userhome', {
       ...user,
       // style: "userhome.css",
-      // logged_in: true
+      logged_in: true
     });
   } catch (err) {
     res.status(500).json(err);
@@ -46,7 +46,7 @@ router.get('/login', (req, res) => {
 router.get('/signup', (req, res) => {
   // If the user is already logged in, redirect the request to another route
   if (req.session.logged_in) {
-    res.redirect('/post');
+    res.redirect('/userhome');
     return;
   }
 
@@ -54,17 +54,10 @@ router.get('/signup', (req, res) => {
 });
 
 
-
-
-// maybe need for posts 
-
-// Use withAuth middleware to prevent access to route
-router.get('/post', async (req, res) => {
-// router.get('/post', withAuth, async (req, res) => {  
+router.get('/post', withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    // const userData = await User.findByPk(req.session.user_id, {
-      const userData = User.findAll( {
+    const userData = await User.findByPk(req.session.user_id, {
       attributes: { exclude: ['password'] },
       include: [{ model: Post }],
     });
@@ -73,16 +66,41 @@ router.get('/post', async (req, res) => {
 
     res.render('post', {
       ...user,
-      style: "userhome.css",
-      // logged_in: true
+      logged_in: true
     });
   } catch (err) {
     res.status(500).json(err);
-   }//finally{
-//     res.render('post');
-//   }
-  
+  }
 });
+
+
+// maybe need for posts 
+
+// Use withAuth middleware to prevent access to route
+// router.get('/post', async (req, res) => {
+// router.get('/post', withAuth, async (req, res) => {  
+//   try {
+//     // Find the logged in user based on the session ID
+//     const userData = await User.findByPk(req.session.user_id, {
+//       // const userData = User.findAll( {
+//       attributes: { exclude: ['password'] },
+//       include: [{ model: Post }],
+//     });
+
+//     const user = userData.get({ plain: true });
+
+//     res.render('post', {
+//       ...user,
+//       // style: "userhome.css",
+//       logged_in: true
+//     });
+//   } catch (err) {
+//     res.status(500).json(err);
+//    }//finally{
+// //     res.render('post');
+// //   }
+  
+// });
 
 
 
