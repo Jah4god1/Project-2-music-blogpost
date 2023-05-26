@@ -1,10 +1,9 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const { Post } = require('../../models');
 
 
 // Create a new post
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
   try {
     const { songName, artist, } = req.body;
     const userId = req.session.user_id; // assuming user's ID is stored in session
