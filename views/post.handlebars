@@ -7,20 +7,26 @@
     {{/each}}
   </select>
 </div>
-
-<!-- ... rest of the body ... -->
-
+<div class="d-flex justify-content-center">
+  <select id="pictureSelect">
+    <option value="">--Please choose an option--</option>
+    <option value="./images/neon-heart-illustration-vector.webp">Love</option>
+    <option value="./images/glowing-neon-line-dumbbell-icon-isolated-on-brick-vector-43042182.jpg">Workout</option>
+    <option value="./images/open-book-neon-label-vector-26152672.jpg">Study</option>
+    <option value="./images/47b52ca552405c1c96fd28e234ef53b1.jpg">Party</option>
+  </select>
+</div>
 <!-- Post Form  -->
 <div class="container">
   <div class="form-container">
     <form>
       <div class="form-group">
-        <label for="inputSongTitle"></label>
+        <label for="inputSongName"></label>
         <input type="text" class="form-control-sm d-block mx-auto" id="inputUsername" placeholder="Song Title"
-          value="{{songTitle}}">
-        <label for="inputArtistBandName"></label>
+          value="{{songName}}">
+        <label for="inputArtist"></label>
         <input type="password" class="form-control-sm d-block mx-auto" id="inputPassword" placeholder="Artist/Band Name"
-          value="{{artistBandName}}">
+          value="{{artist}}">
       </div>
       <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
     </form>
