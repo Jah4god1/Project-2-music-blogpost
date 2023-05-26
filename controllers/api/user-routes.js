@@ -6,11 +6,7 @@ router.post('/signup', async (req, res) => {
   try {
     console.log('i made it ')
     // Create a new user with the data from req.body
-    const newUser = await User.create({
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password,  // in a real-world application, be sure to hash this password
-    });
+    const newUser = await User.create(req.body);
 
     // Save the user's ID and logged-in status to the session
     req.session.save(() => {

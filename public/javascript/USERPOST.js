@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
     pictureContainer.appendChild(postedContent);
 
     // Send the form data to the server
-    fetch('/posts', {
+    fetch('/api/posts/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .then(data => {
         // After the server responds, redirect to the user home page
-        window.location.href = "../../views/userhome.handlebars";
+        window.location.href = "./userhome";
       })
       .catch((error) => {
         console.error('Error:', error);
