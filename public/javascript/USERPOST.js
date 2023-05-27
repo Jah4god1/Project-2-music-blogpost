@@ -1,3 +1,4 @@
+//PLACE template within the userhome (profile/dashboard)
 document.addEventListener('DOMContentLoaded', function () {
   // Select the picture container and the picture select element
   var pictureContainer = document.getElementById('pictureContainer');

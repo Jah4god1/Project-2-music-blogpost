@@ -1,0 +1,32 @@
+<!-- partials/post.handlebars -->
+
+<div class="post-form">
+  <h2>Create a New Post</h2>
+  <form action="/posts" method="POST">
+   
+  <div class="form-group">
+    <label for="pictureSelect">Select an Image:</label>
+    <select id="pictureSelect" name="picture" onchange="updateImage()">
+      <option value="">-- Select an image --</option>
+      <option value="Love" src="public/images/uploads/love.webp">Love</option>
+      <option value="Workout" src="public/images/uploads/workout.jpg">Workout</option>
+      <option value="Study" src="public/images/uploads/study.webp">Study</option>
+      <option value="Dance" src="public/images/uploads/dance.webp">Dance</option>
+    </select>
+  </div>
+  <img id="selectedImage" src="" alt="Selected Image">
+
+    <div class="form-group">
+      <label for="inputSongName">Song Name:</label>
+      <input type="text" id="inputSongName" name="songName" required>
+    </div>
+    <div class="form-group">
+      <label for="inputArtist">Artist:</label>
+      <input type="text" id="inputArtist" name="artist" required>
+    </div>
+    <button type="submit">Create Post</button>
+  </form>
+</div>
+
+<script src="public\javascript\userpost.js">
+</script> 
