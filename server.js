@@ -4,6 +4,9 @@ const exphbs = require('express-handlebars');// RENDER HTML views
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
+//LISTS endpoints in terminal
+const listEndpoints = require('express-list-endpoints');
+
 
 const routes = require('./controllers'); // HANDLES routes for endpoints
 const sequelize = require('./config/connection'); //CONNECTION sequelize db
@@ -40,6 +43,8 @@ app.use(routes); //REGISTER defined routes
 //   console.error(err);
 //   res.status(500).json({ message: 'An unexpected error occurred' });
 // });
+
+console.log(listEndpoints(app));
 
 //Start server
 sequelize.sync({ force: false }).then(() => {
