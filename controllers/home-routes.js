@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/userhome', withAuth, async (req, res) => {
+router.get('/userhome', async (req, res) => {
   // router.get('/userhome', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
@@ -19,7 +19,7 @@ router.get('/userhome', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
+    console.log(user)
     res.render('userhome', {
       ...user,
       // style: "userhome.css",
