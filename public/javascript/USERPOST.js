@@ -1,8 +1,8 @@
-//PLACE template within the userhome (profile)
+//PLACE template within the userhome (profile/dashboard)
 document.addEventListener('DOMContentLoaded', function () {
   // Select the picture container and the picture select element
-  var pictureContainer = document.querySelector('pictureContainer');
-  var pictureSelect = document.querySelector('pictureSelect');
+  var pictureContainer = document.getElementById('pictureContainer');
+  var pictureSelect = document.getElementById('pictureSelect');
 
   // Add event listener to the picture select element
   pictureSelect.addEventListener('change', function () {
