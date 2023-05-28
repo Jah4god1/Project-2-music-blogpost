@@ -1,36 +1,29 @@
-<!-- Mood Selection  -->
-<div class="d-flex justify-content-center">
-  <select id="pictureSelect">
-    <option value="">--Please choose an option--</option>
-    {{#each moodOptions}}
-    <option value="{{this.value}}">{{this.text}}</option>
-    {{/each}}
-  </select>
-</div>
-<div class="d-flex justify-content-center">
-  <select id="pictureSelect">
-    <option value="">--Please choose an option--</option>
-    <option value="/images/neon-heart-illustration-vector.webp">Love</option>
-    <option value="/images/glowing-neon-line-dumbbell-icon-isolated-on-brick-vector-43042182.jpg">Workout</option>
-    <option value="/images/open-book-neon-label-vector-26152672.jpg">Study</option>
-    <option value="/images/47b52ca552405c1c96fd28e234ef53b1.jpg">Party</option>
-  </select>
-</div>
-<!-- Post Form  -->
-<div class="container">
-  <div class="form-container">
-    <form>
-      <div class="form-group">
-        <label for="inputSongName"></label>
-        <input type="text" class="form-control-sm d-block mx-auto" id="inputUsername" placeholder="Song Title"
-          value="{{songName}}">
-        <label for="inputArtist"></label>
-        <input type="password" class="form-control-sm d-block mx-auto" id="inputPassword" placeholder="Artist/Band Name"
-          value="{{artist}}">
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
-    </form>
-  </div>
+<div class="post-form">
+  <h5 class="text-center">CREATE A NEW POST</h5>
+
+  <!-- START post form -->
+  <form action="/posts" method="POST">
+    <!-- START pictureSelect -->
+    <div class="form-group">
+      <label for="pictureSelect"></label>
+      <select id="pictureSelect" class="form-control-sm d-block mx-auto" name="picture">
+        <option value="">-- Select an image --</option>
+        <option value="Love" data-src="public/images/uploads/love.webp">Love</option>
+        <option value="Workout" data-src="public/images/uploads/workout.jpg">Workout</option>
+        <option value="Study" data-src="public/images/uploads/study.webp">Study</option>
+        <option value="Dance" data-src="public/images/uploads/dance.webp">Dance</option>
+      </select>
+
+      <label for="inputSongName"></label>
+      <input type="text" class="form-control-sm d-block mx-auto" id="inputSongName" placeholder="Song Title"
+        value="{{songName}}">
+
+      <label for="inputArtist"></label>
+      <input type="text" class="form-control-sm d-block mx-auto" id="inputArtist" placeholder="Artist/Band Name"
+        value="{{artist}}">
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
+  </form>
 </div>
 
-<script src="/javascript/userpost.js"></script>
+<script src="/public/javascript/userpost.js"></script>

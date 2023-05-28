@@ -1,3 +1,4 @@
+//ADDED withAuth back
 const router = require('express').Router();
 const { User, Post } = require('../models');
 const withAuth = require('../utils/auth');
@@ -9,7 +10,7 @@ router.get('/', (req, res) => {
 });
 
 // Use withAuth middleware to prevent access to route
-router.get('/userhome', async (req, res) => {
+router.get('/userhome', withAuth, async (req, res) => {
   // router.get('/userhome', async (req, res) => {
   try {
     // Find the logged in user based on the session ID
