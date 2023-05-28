@@ -11,10 +11,15 @@
           Post</a></button>
   </div>
 
+<!-- ? DO I NEED input type below -->
+<!--<input type="hidden" name="selectedImage" id="selectedImageInput">-->
+
+
 <!--START userPosts-container for collection of User's posts to display in dashboard-->
   <div class="userPosts-container">
     <h5 class="text-center">MY COLLECTION</h5> 
-    <!--ADD post-list items for user-posts to display-->   
+
+  <!--ADD post-list items for user-posts to display-->   
       <ol class="post-list">
   {{#each posts as |post|}}
   <li>
@@ -26,7 +31,5 @@
  
 </div>
 
-
 <!-- Add Bootstrap JS and its dependencies -->
-
 <script src="/javascript/userhome.js"></script>
