@@ -11,19 +11,17 @@
           Post</a></button>
   </div>
 
-<!--CREATE container for collection of User's posts to display in dashboard-->
+<!--START userPosts-container for collection of User's posts to display in dashboard-->
   <div class="userPosts-container">
     <h5 class="text-center">MY COLLECTION</h5> 
     <!--ADD post-list items for user-posts to display-->   
       <ol class="post-list">
-        {{#each posts as |post|}}
-        <li>
-          {{> post-info post }}
-
-        </li>
-        {{/each}}
-      </ol>
-  </div>
+  {{#each posts as |post|}}
+  <li>
+    {{> post-info post}}
+  </li>
+  {{/each}}
+</ol>
 <!--END container-->
  
 </div>
