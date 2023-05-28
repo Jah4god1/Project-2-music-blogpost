@@ -1,54 +1,19 @@
 <div class="post-form">
-  <h2>Create a New Post</h2>
+  <h3 class="text-center">Create a New Post</h3>
 
 <!--START post form-->
   <form action="/posts" method="POST">
-   
    <!--START pictureSelect-->
    <div class="form-group">
-    <label for="pictureSelect">Select an Image:</label>
-    <select id="pictureSelect" name="picture" onchange="updateImage()">
+    <label for="pictureSelect"></label>
+    <select id="pictureSelect" class="form-control-sm d-block mx-auto" name="picture" onchange="updateImage()">
       <option value="">-- Select an image --</option>
       <option value="Love" src="public/images/uploads/love.webp">Love</option>
       <option value="Workout" src="public/images/uploads/workout.jpg">Workout</option>
       <option value="Study" src="public/images/uploads/study.webp">Study</option>
       <option value="Dance" src="public/images/uploads/dance.webp">Dance</option>
     </select>
-   </div>
-   <!--END pictureSelect options-->
-   
-  <img id="selectedImage" src="" alt="Selected Image">
-
-    <!--START inputSongName-->
-    <div class="form-group">
-       <!--? Do I need label here or -->
-      <label for="inputSongName">Song Name:</label>
-      <input type="text" id="inputSongName" name="Song Name" required>
-    </div>
-    <!--END inputSongName-->
-
-    <!--START inputArtist-->
-    <div class="form-group">
-      <label for="inputArtist">Artist:</label>
-      <input type="text" id="inputArtist" name="Artist" required>
-    </div>
-    <!--END inputArtist-->
-
-    <!--START Create Post "submit button"-->
-    <div class="form-group">
-        <button type="submit">Create Post</button>
-    </div>
-    <!--END Create Post "submit button"-->
-  </form>
-  <!--END form"-->
-</div>
-
-<!-- Post Form -->
-<div class="container">
-  <div class="form-container">
-    <form>
-      <div class="form-group">
-        <label for="inputSongName"></label>
+     <label for="inputSongName"></label>
         <input type="text" class="form-control-sm d-block mx-auto" id="inputSongName" placeholder="Song Title"
           value="{{songName}}">
         <label for="inputArtist"></label>
@@ -56,40 +21,6 @@
           value="{{artist}}">
       </div>
       <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
-    </form>
-  </div>
-</div>
-
-<script src="/javascript/userpost.js"></script>
-
-<!-- Mood Selection
-
-<div class="d-flex justify-content-center">
-  <select id="pictureSelect">
-    <option value="">--Please choose an option--</option>
-    <option value="/images/neon-heart-illustration-vector.webp">Love</option>
-    <option value="/images/glowing-neon-line-dumbbell-icon-isolated-on-brick-vector-43042182.jpg">Workout</option>
-    <option value="/images/open-book-neon-label-vector-26152672.jpg">Study</option>
-    <option value="/images/47b52ca552405c1c96fd28e234ef53b1.jpg">Party</option>
-  </select>
-</div>
-  -->
-<!-- Post Form  
-<div class="container">
-  <div class="form-container">
-    <form>
-      <div class="form-group">
-        <label for="inputSongName"></label>
-        <input type="text" class="form-control-sm d-block mx-auto" id="inputUsername" placeholder="Song Title"
-          value="{{songName}}">
-        <label for="inputArtist"></label>
-        <input type="password" class="form-control-sm d-block mx-auto" id="inputPassword" placeholder="Artist/Band Name"
-          value="{{artist}}">
-      </div>
-      <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
-    </form>
-  </div>
-</div>
-
-<script src="/javascript/userpost.js"></script>
--->
+   </div>
+   
+<script src="/public/javascript/userpost.js"></script>
