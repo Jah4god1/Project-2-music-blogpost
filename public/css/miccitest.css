@@ -56,13 +56,14 @@
 .aside-container {
   /* Styles for the aside container */
   position: absolute;
-  top: 5;
-  right: 0;
+  top: 200px;
+  right: 15px;
   width: 250px; 
   background-color: #3652E1;
   padding: 10px;
   color: #eee9e9;
-  font-weight: 300;
+  font-weight: 400;
+  text-align: center;
   
   /* Add any other styles you want */
 }

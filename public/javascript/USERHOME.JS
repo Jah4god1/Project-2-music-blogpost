@@ -1,3 +1,4 @@
+//ONLY LOADS USER POSTS, NEED TO LOAD ALL USERS POSTS, AS WELL
 // When the "USERHOME" page loads
 window.addEventListener('DOMContentLoaded', (event) => {
   // Send a request to the server for all posts

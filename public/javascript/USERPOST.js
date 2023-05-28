@@ -1,8 +1,9 @@
+//POST FORM TEMPLATE
 function updateImage() {
   var pictureSelect = document.getElementById("pictureSelect");
   var selectedValue = pictureSelect.value;
 
-  // Define an image array with corresponding sources
+  // DEFINED an image array with corresponding sources
   var imageArray = {
     Love: "public/images/uploads/love.webp",
     Workout: "public/images/uploads/workout.jpg",
@@ -10,14 +11,14 @@ function updateImage() {
     Dance: "public/images/uploads/dance.webp"
   };
 
-  // Get the selected image source from the image array
+  // GET selected image source from the image array
   var imageSrc = imageArray[selectedValue];
 
   var imageElement = document.getElementById("postImage");
   imageElement.src = imageSrc;
 }
 
-// Additional JavaScript code for handling form submission or other functionality can be added here
+// ANY ADDITIONAL code needed for handling form submission or other functionality can be added here
 
 // Wait for the DOM to be loaded
 document.addEventListener("DOMContentLoaded", function() {
