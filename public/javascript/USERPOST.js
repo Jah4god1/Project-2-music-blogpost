@@ -1,3 +1,11 @@
+app.use(express.static('public', {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.js')) {
+      res.setHeader('Content-Type', 'application/javascript');
+    }
+  }
+}));
+
 //PLACE template within the userhome (profile/dashboard)
 document.addEventListener('DOMContentLoaded', function () {
   // Select the picture container and the picture select element
