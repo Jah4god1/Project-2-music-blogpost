@@ -2,27 +2,56 @@
   <h5 class="text-center">CREATE A NEW POST</h5>
 
   <!-- START post form -->
-  <form action="/post" method="POST">
+  <form action="/posts" method="POST">
     <!-- START pictureSelect -->
     <div class="form-group">
       <label for="pictureSelect"></label>
-      <select id="pictureSelect" class="form-control-sm d-block mx-auto" name="picture">
+      <select
+        id="pictureSelect"
+        class="form-control-sm d-block mx-auto"
+        name="picture"
+      >
         <option value="">-- Select an image --</option>
-        <option value="Love" data-src="public/images/uploads/love.webp">Love</option>
-        <option value="Workout" data-src="public/images/uploads/workout.jpg">Workout</option>
-        <option value="Study" data-src="public/images/uploads/study.webp">Study</option>
-        <option value="Dance" data-src="public/images/uploads/dance.webp">Dance</option>
+        <option
+          value="Love"
+          data-src="public/images/uploads/love.webp"
+        >Love</option>
+        <option
+          value="Workout"
+          data-src="public/images/uploads/workout.jpg"
+        >Workout</option>
+        <option
+          value="Study"
+          data-src="public/images/uploads/study.webp"
+        >Study</option>
+        <option
+          value="Dance"
+          data-src="public/images/uploads/dance.webp"
+        >Dance</option>
       </select>
 
       <label for="inputSongName"></label>
-      <input type="text" class="form-control-sm d-block mx-auto" id="inputSongName" placeholder="Song Title"
-        value="{{songName}}">
+      <input
+        type="text"
+        class="form-control-sm d-block mx-auto"
+        id="inputSongName"
+        placeholder="Song Title"
+        value="{{songName}}"
+      />
 
       <label for="inputArtist"></label>
-      <input type="text" class="form-control-sm d-block mx-auto" id="inputArtist" placeholder="Artist/Band Name"
-        value="{{artist}}">
+      <input
+        type="text"
+        class="form-control-sm d-block mx-auto"
+        id="inputArtist"
+        placeholder="Artist/Band Name"
+        value="{{artist}}"
+      />
     </div>
-    <button type="submit" class="btn btn-primary btn-sm d-block mx-auto">Post</button>
+    <button
+      type="submit"
+      class="btn btn-primary btn-sm d-block mx-auto"
+    >Post</button>
   </form>
 </div>
 
