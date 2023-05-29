@@ -1,3 +1,4 @@
+//ADDED withAuth back
 const router = require('express').Router();
 const { User, Post } = require('../models');
 const withAuth = require('../utils/auth');
@@ -19,7 +20,7 @@ router.get('/userhome', withAuth, async (req, res) => {
     });
 
     const user = userData.get({ plain: true });
-
+    console.log(user)
     res.render('userhome', {
       ...user,
       // style: "userhome.css",

@@ -1,19 +1,30 @@
-<link rel="stylesheet" href="./css/miccitest.css">
-<link rel="stylesheet" href="./css/miccitest2.css">
-<div class="post-container">
-  <h1>Latest Posts</h1>
-  {{#each posts}}
-      <div class="post">
-          <img src="{{imageOption}}" alt="User chosen image">
-          <h2>{{songName}} by {{artistName}}</h2>
-          <p>Posted by: {{username}}</p>
-      </div>
+<link rel="stylesheet" href="/css/miccitest.css">
+<link rel="stylesheet" href="/css/miccitest2.css">
+<div class="container">
+  <h2 class="text-center">My Dashboard</h2>
+
+  <!--CHANGE class from "form-container? Form moved to post.handlebars-->
+  <div class="form-container">
+    <h4> Welcome!</h4>
+    <h6>would you like to...</h6>
+    <button type="submit" ><a class="btn btn-primary btn-block" href="/post" >Create a
+          Post</a></button>
+  </div>
+
+<!--START userPosts-container for collection of User's posts to display in dashboard-->
+  <div class="userPosts-container">
+    <h5 class="text-center">MY COLLECTION</h5> 
+    <!--ADD post-list items for user-posts to display-->   
+      <ol class="post-list">
+  {{#each posts as |post|}}
+  <li>
+    {{> post-info post}}
+  </li>
   {{/each}}
+</ol>
+<!--END container-->
+ 
 </div>
 <!-- Add Bootstrap JS and its dependencies -->
 
-
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="./javascript/userpost.js"></script>
+<script src="/javascript/userhome.js"></script>

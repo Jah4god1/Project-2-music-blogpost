@@ -1,75 +1,138 @@
-document.addEventListener('DOMContentLoaded', function () {
-  // Select the picture container and the picture select element
-  var pictureContainer = document.getElementById('pictureContainer');
-  var pictureSelect = document.getElementById('pictureSelect');
+function updateImage() {
+  var pictureSelect = document.getElementById("pictureSelect");
+  var selectedValue = pictureSelect.value;
 
-  // Add event listener to the picture select element
-  pictureSelect.addEventListener('change', function () {
-    // Get the selected option value
-    var selectedOption = pictureSelect.value;
+  // Define an image array with corresponding sources
+  var imageArray = {
+    Love: "public/images/uploads/love.webp",
+    Workout: "public/images/uploads/workout.jpg",
+    Study: "public/images/uploads/study.webp",
+    Dance: "public/images/uploads/dance.webp"
+  };
 
-    // Clear the picture container
-    pictureContainer.innerHTML = '';
+  // Get the selected image source from the image array
+  var imageSrc = imageArray[selectedValue];
 
-    // Create a new image element
-    var image = document.createElement('img');
-    image.src = selectedOption;
-    image.classList.add('img-fluid');
+  var imageElement = document.getElementById("postImage");
+  imageElement.src = imageSrc;
+}
 
-    // Append the image to the picture container
-    pictureContainer.appendChild(image);
+// Additional JavaScript code for handling form submission or other functionality can be added here
+
+// Wait for the DOM to be loaded
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the form element
+  var postForm = document.querySelector(".post-form");
+
+  // Add an event listener for form submission
+  postForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the form values
+    var pictureSelect = document.getElementById("pictureSelect");
+    var songNameInput = document.getElementById("inputSongName");
+    var artistInput = document.getElementById("inputArtist");
+
+    // Create a new post object
+    var post = {
+      picture: pictureSelect.value,
+      songName: songNameInput.value,
+      artist: artistInput.value
+    };
+
+    // Call a function to render the new post on the page
+    renderPost(post);
+
+    // Reset the form values
+    pictureSelect.value = "";
+    songNameInput.value = "";
+    artistInput.value = "";
   });
 
-  // Add event listener to the post form
-  var postForm = document.querySelector('.form-container form');
-  postForm.addEventListener('submit', function (event) {
-    event.preventDefault();
+  // Function to render a new post on the page
+  function renderPost(post) {
+    // Get the post list element
+    var postList = document.querySelector(".post-list");
 
-    // Get the song title and artist/band name inputs
-    var songTitleInput = document.getElementById('inputUsername');
-    var artistNameInput = document.getElementById('inputPassword');
+    // Create a new list item element
+    var listItem = document.createElement("li");
 
-    // Get the values from the inputs
-    var songTitle = songTitleInput.value;
-    var artistName = artistNameInput.value;
+    // Set the inner HTML of the list item using the post data
+    listItem.innerHTML = `
+      <div class="post-info">
+        <img src="public/images/uploads/${post.picture}.webp" alt="${post.picture}">
+        <p>Song Title: ${post.songName}</p>
+        <p>Artist/Band Name: ${post.artist}</p>
+      </div>
+    `;
 
-    // Get the selected image
-    var selectedImage = pictureSelect.value;
-
-    // Clear the inputs
-    songTitleInput.value = '';
-    artistNameInput.value = '';
-
-    // Display the posted content
-    var postedContent = document.createElement('p');
-    postedContent.textContent = 'Posted: ' + songTitle + ' by ' + artistName;
-    pictureContainer.appendChild(postedContent);
-
-    // Send the form data to the server
-    fetch('/api/posts/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title: songTitle,
-        artist: artistName,
-        image: selectedImage
-      }),
-    })
-      .then(response => {
-        // Check if the response status is OK (200-299)
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        // After the server responds, redirect to the user home page
-        window.location.href = "./userhome";
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
-  });
+    // Append the new list item to the post list
+    postList.appendChild(listItem);
+  }
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*// Wait for the DOM to be loaded
+document.addEventListener("DOMContentLoaded", function() {
+  // Get the form element
+  var postForm = document.querySelector(".post-form");
+
+  // Add an event listener for form submission
+  postForm.addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent the default form submission
+
+    // Get the form values
+    var pictureSelect = document.getElementById("pictureSelect");
+    var songNameInput = document.getElementById("inputSongName");
+    var artistInput = document.getElementById("inputArtist");
+
+    // Create a new post object
+    var post = {
+      picture: pictureSelect.value,
+      songName: songNameInput.value,
+      artist: artistInput.value
+    };
+
+    // Call a function to render the new post on the page
+    renderPost(post);
+
+    // Reset the form values
+    pictureSelect.value = "";
+    songNameInput.value = "";
+    artistInput.value = "";
+  });
+
+  // Function to render a new post on the page
+  function renderPost(post) {
+    // Get the post list element
+    var postList = document.querySelector(".post-list");
+
+    // Create a new list item element
+    var listItem = document.createElement("li");
+
+    // Set the inner HTML of the list item using the post data
+    listItem.innerHTML = `
+      <div class="post-info">
+        <img src="public/images/uploads/${post.picture}.webp" alt="${post.picture}">
+        <p>Song Title: ${post.songName}</p>
+        <p>Artist/Band Name: ${post.artist}</p>
+      </div>
+    `;
+
+    // Append the new list item to the post list
+    postList.appendChild(listItem);
+  }
+});
+*/

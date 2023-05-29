@@ -1,7 +1,3 @@
-body {
-  position: relative;
-}
-
 .color-transition {
     animation: blueToPurple 3s infinite;
     font-weight: bolder;
