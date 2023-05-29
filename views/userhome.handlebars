@@ -1,43 +1,41 @@
-<link rel="stylesheet" href="/css/miccitest.css">
-<link rel="stylesheet" href="/css/miccitest2.css">
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/css/miccitest.css">
+  <link rel="stylesheet" href="/css/miccitest2.css">
+</head>
+<body>
+  <div class="container">
+    <h2 class="text-center">My Dashboard</h2>
 
-<div class="container">
-  <h2 class="text-center">My Dashboard</h2>
+    <!-- Form container -->
+    <div class="form-container">
+      <h4>Welcome!</h4>
+      <h6>Would you like to...</h6>
+      <button type="submit"><a class="btn btn-primary btn-block" href="/post">Create a Post</a></button>
+    </div>
 
-  <!--CHANGE class from "form-container? Form moved to post.handlebars-->
-  <div class="form-container">
-    <h4> Welcome!</h4>
-    <h6>would you like to...</h6>
-    <button type="submit" ><a class="btn btn-primary btn-block" href="/post" >Create a
-          Post</a></button>
-  </div>
+    <!-- Newsfeed container -->
+    <div class="aside-container">
+      <h6>COMMUNITY PLAYLIST</h6>
+    </div>
 
-<!-- NEWSFEED container -->
-  <div class="aside-container">
-    <h6>COMMUNITY PLAYLIST</h6>
-  </div>
-</div>
-
-<!-- ? DO I NEED input type below -->
-<!--<input type="hidden" name="selectedImage" id="selectedImageInput">-->
-
-
-<!--START userPosts-container for collection of User's posts to display in dashboard-->
-<div class="userPosts-container">
-    <h5 class="text-center">MY POSTS</h5> 
-
-  <!--ADD post-list items for user-posts to display-->   
+    <!-- User posts container -->
+    <div class="userPosts-container">
+      <h5 class="text-center">MY POSTS</h5>
       <ol class="post-list">
-  {{#each posts as |post|}}
-  <li>
-    {{ post-info post}}
-  </li>
-  {{/each}}
-</ol>
+        {{#each posts}}
+        <li>
+          <!-- Display post information -->
+          {{ post-info this }}
+        </li>
+        {{/each}}
+      </ol>
+    </div>
+  </div>
 
-<!--END user-post container--> 
-</div>
-
-<!-- Add Bootstrap JS and its dependencies -->
-<script src="/javascript/userhome.js"></script>
-<script src="/javascript/userpost.js"></script>
+  <!-- Add Bootstrap JS and its dependencies -->
+  <script src="/javascript/userhome.js"></script>
+  <script src="/javascript/userpost.js"></script>
+</body>
+</html>
