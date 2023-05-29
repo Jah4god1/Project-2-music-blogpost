@@ -1,9 +1,9 @@
-//POST FORM TEMPLATE
+// POST FORM TEMPLATE
 function updateImage() {
   var pictureSelect = document.getElementById("pictureSelect");
   var selectedValue = pictureSelect.value;
 
-  // DEFINED an image array with corresponding sources
+  // image array with corresponding sources
   var imageArray = {
     Love: "public/images/uploads/love.webp",
     Workout: "public/images/uploads/workout.jpg",
@@ -14,51 +14,74 @@ function updateImage() {
   // GET selected image source from the image array
   var imageSrc = imageArray[selectedValue];
 
-  var imageElement = document.getElementById("postImage");
+  // var imageElement = document.getElementById("postImage");
   imageElement.src = imageSrc;
 }
 
-// ANY ADDITIONAL code needed for handling form submission or other functionality can be added here
-
-// Wait for the DOM to be loaded
+// WAIT for the DOM to be loaded
 document.addEventListener("DOMContentLoaded", function() {
-  // Get the form element
+
+  // GET form element
   var postForm = document.querySelector(".post-form");
 
-  // Add an event listener for form submission
-  postForm.addEventListener("submit", function(event) {
+  // ADD event listener for form submission
+  postForm.addEventListener("submit", async function(event) {
     event.preventDefault(); // Prevent the default form submission
 
-    // Get the form values
+    // GET form values
     var pictureSelect = document.getElementById("pictureSelect");
     var songNameInput = document.getElementById("inputSongName");
     var artistInput = document.getElementById("inputArtist");
 
-    // Create a new post object
+    // CREATE a new post object
     var post = {
       picture: pictureSelect.value,
       songName: songNameInput.value,
       artist: artistInput.value
     };
 
-    // Call a function to render the new post on the page
-    renderPost(post);
+    try {
+      // CALL async function to send the POST request and render the new post
+      await createPost(post);
+    } catch (error) {
+      // HANDLE errors that occur during the request
+      console.error('Error:', error);
+    }
 
-    // Reset the form values
+    // RESET form values
     pictureSelect.value = "";
     songNameInput.value = "";
     artistInput.value = "";
   });
 
-  // Function to render a new post on the page
+  // ASYNC function to send the POST request and render the new post
+  async function createPost(post) {
+    const response = await fetch('/api/posts', {
+      method: 'POST',
+      body: JSON.stringify(post),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      // CALL function to render the new post on the page
+      renderPost(post);
+    } else {
+      throw new Error(response.statusText);
+    }
+  }
+
+  // FUNCTION to render a new post on the page
   function renderPost(post) {
-    // Get the post list element
+
+    // GET post list element
     var postList = document.querySelector(".post-list");
 
-    // Create a new list item element
+    // CREATE new list item element
     var listItem = document.createElement("li");
 
-    // Set the inner HTML of the list item using the post data
+    // SET inner HTML of the list item using the post data
     listItem.innerHTML = `
       <div class="post-info">
         <img src="public/images/uploads/${post.picture}.webp" alt="${post.picture}">
@@ -67,8 +90,7 @@ document.addEventListener("DOMContentLoaded", function() {
       </div>
     `;
 
-    // Append the new list item to the post list
+    // APPEND new list item to the post list
     postList.appendChild(listItem);
   }
 });
-
