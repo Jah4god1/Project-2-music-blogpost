@@ -48,22 +48,28 @@
   
 }
 
-.navbar {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;  /* Make sure the navbar is above the posts */
+.form-container {
+  /* Existing form-container styles */
+  position: relative;
 }
 
-.post-container {
-  margin: 0 auto;  /* Center the container */
-  width: 80%;  /* You can change this to suit your needs */
-  padding-top: 60px;  /* This should be the height of your navbar, to ensure the posts don't start behind the navbar */
+.aside-container {
+  /* Styles for the aside container */
+  position: absolute;
+  top: 200px;
+  right: 15px;
+  width: 250px; 
+  background-color: #3652E1;
+  padding: 10px;
+  color: #eee9e9;
+  font-weight: 400;
+  text-align: center;
+  
+  /* Add any other styles you want */
 }
 
-/* Rest of your CSS... */
 
- 
+
 
 
   

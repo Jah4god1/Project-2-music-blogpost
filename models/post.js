@@ -1,6 +1,6 @@
+// DO I ADD IMAGE SELECTIONS to model attributes
 //DOWNLOAD dependencies
 const { Model, DataTypes } = require('sequelize');
-const bcrypt = require('bcrypt');
 const sequelize = require('../config/connection');
 const User = require('./user');
 
